@@ -67,6 +67,42 @@ class MeshPacketWrapper {
   /// Whether this is an admin packet
   bool get isAdmin => portnum == PortNum.ADMIN_APP;
 
+  /// Whether this packet has a public key
+  bool get hasPublicKey => packet.hasPublicKey();
+
+  /// Public key from packet (if available)
+  List<int>? get publicKey => hasPublicKey ? packet.publicKey : null;
+
+  /// Whether this packet is PKI encrypted
+  bool get isPkiEncrypted => packet.pkiEncrypted;
+
+  /// Transport mechanism used
+  MeshPacket_TransportMechanism? get transportMechanism => packet.transportMechanism;
+
+  /// Whether this packet came via MQTT
+  bool get isViaMqtt => packet.viaMqtt;
+
+  /// Hop start value
+  int get hopStart => packet.hopStart;
+
+  /// Next hop node ID
+  int? get nextHop => packet.hasNextHop() ? packet.nextHop : null;
+
+  /// Relay node ID
+  int? get relayNode => packet.hasRelayNode() ? packet.relayNode : null;
+
+  /// Time after which to transmit (for delayed packets)
+  int? get txAfter => packet.hasTxAfter() ? packet.txAfter : null;
+
+  /// Request ID from decoded data
+  int? get requestId => decoded?.hasRequestId() == true ? decoded!.requestId : null;
+
+  /// Reply ID from decoded data
+  int? get replyId => decoded?.hasReplyId() == true ? decoded!.replyId : null;
+
+  /// Emoji from decoded data
+  int? get emoji => decoded?.hasEmoji() == true ? decoded!.emoji : null;
+
   /// Get the text message content (if this is a text message)
   String? get textMessage {
     if (!isTextMessage || decoded == null) return null;

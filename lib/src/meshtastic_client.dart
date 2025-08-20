@@ -55,6 +55,7 @@ class MeshtasticClient {
   ModuleConfig? _moduleConfig;
   final List<Channel> _channels = [];
   User? _localUser;
+  DeviceMetadata? _deviceMetadata;
 
   bool _configComplete = false;
   int _expectedFromNum = 0;
@@ -78,6 +79,107 @@ class MeshtasticClient {
   User? get localUser => _localUser;
   bool get isConnected => _device?.isConnected ?? false;
   bool get isConfigured => _configComplete;
+
+  // Convenience getters for critical information
+  
+  /// Connected device's Bluetooth name
+  String? get connectedDeviceName => _device?.platformName;
+  
+  /// Connected device's Bluetooth remote ID
+  String? get connectedDeviceId => _device?.remoteId.str;
+  
+  /// Connected node info (self)
+  NodeInfoWrapper? get connectedNode => 
+      _myNodeInfo != null ? _nodes[_myNodeInfo!.myNodeNum] : null;
+  
+  /// Connected node's battery level
+  int? get connectedNodeBatteryLevel => connectedNode?.batteryLevel;
+  
+  /// Connected node's firmware version (from DeviceMetadata if available)
+  String? get firmwareVersion => _deviceMetadata?.firmwareVersion;
+  
+  /// Connected node's hardware model
+  HardwareModel? get connectedNodeHardwareModel => _localUser?.hwModel;
+  
+  /// Connected node's role
+  Config_DeviceConfig_Role? get connectedNodeRole => _localUser?.role;
+  
+  /// Connected node's long name
+  String? get connectedNodeLongName => _localUser?.longName;
+  
+  /// Connected node's short name
+  String? get connectedNodeShortName => _localUser?.shortName;
+
+  /// Number of nodes in the mesh
+  int get nodeCount => _nodes.length;
+
+  /// Number of channels configured
+  int get channelCount => _channels.length;
+
+  /// Primary channel name
+  String? get primaryChannelName {
+    if (_channels.isNotEmpty && _channels[0].hasSettings()) {
+      return _channels[0].settings.name;
+    }
+    return null;
+  }
+
+  /// Device reboot count
+  int? get rebootCount => _myNodeInfo?.rebootCount;
+
+  /// Minimum app version required
+  int? get minAppVersion => _myNodeInfo?.minAppVersion;
+
+  /// Device ID as hex string
+  String? get deviceIdHex {
+    if (_myNodeInfo?.hasDeviceId() == true) {
+      final bytes = _myNodeInfo!.deviceId;
+      return bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join('');
+    }
+    return null;
+  }
+
+  /// PlatformIO environment
+  String? get platformIOEnvironment => _myNodeInfo?.pioEnv;
+
+  /// Firmware edition
+  FirmwareEdition? get firmwareEdition => _myNodeInfo?.firmwareEdition;
+
+  /// NodeDB count
+  int? get nodedbCount => _myNodeInfo?.nodedbCount;
+
+  /// Device state version
+  int? get deviceStateVersion => _deviceMetadata?.deviceStateVersion;
+
+  /// Whether device can shutdown
+  bool get canShutdown => _deviceMetadata?.canShutdown ?? false;
+
+  /// Whether device has WiFi
+  bool get hasWifi => _deviceMetadata?.hasWifi ?? false;
+
+  /// Whether device has Bluetooth
+  bool get hasBluetooth => _deviceMetadata?.hasBluetooth ?? false;
+
+  /// Whether device has Ethernet
+  bool get hasEthernet => _deviceMetadata?.hasEthernet ?? false;
+
+  /// Device hardware model from metadata
+  HardwareModel? get deviceHardwareModel => _deviceMetadata?.hwModel;
+
+  /// Device role from metadata
+  Config_DeviceConfig_Role? get deviceRole => _deviceMetadata?.role;
+
+  /// Position flags from metadata
+  int? get positionFlags => _deviceMetadata?.positionFlags;
+
+  /// Whether device has remote hardware
+  bool get hasRemoteHardware => _deviceMetadata?.hasRemoteHardware ?? false;
+
+  /// Whether device has PKC
+  bool get hasPKC => _deviceMetadata?.hasPKC ?? false;
+
+  /// Excluded modules bitmask
+  int? get excludedModules => _deviceMetadata?.excludedModules;
 
   /// Initialize the client and request necessary permissions
   Future<void> initialize() async {
@@ -448,6 +550,9 @@ class MeshtasticClient {
         _logger.info(
           'Received MyNodeInfo: myNodeNum=${_myNodeInfo!.myNodeNum.toRadixString(16)}',
         );
+        
+        // Add the connected node to the nodes map if we have user info
+        _addConnectedNodeToMap();
       }
 
       if (fromRadio.hasNodeInfo()) {
@@ -469,7 +574,17 @@ class MeshtasticClient {
             'Received local User: longName=${_localUser!.longName}, '
             'shortName=${_localUser!.shortName}',
           );
+          
+          // Now that we have user info, add connected node to map
+          _addConnectedNodeToMap();
         }
+      }
+
+      if (fromRadio.hasMetadata()) {
+        _deviceMetadata = fromRadio.metadata;
+        _logger.info(
+          'Received DeviceMetadata: firmwareVersion=${_deviceMetadata!.firmwareVersion}',
+        );
       }
 
       if (fromRadio.hasConfig()) {
@@ -511,6 +626,7 @@ class MeshtasticClient {
         _logger.info('  MyNodeInfo: ${_myNodeInfo != null ? "✓" : "✗"}');
         _logger.info('  Config: ${_config != null ? "✓" : "✗"}');
         _logger.info('  ModuleConfig: ${_moduleConfig != null ? "✓" : "✗"}');
+        _logger.info('  DeviceMetadata: ${_deviceMetadata != null ? "✓" : "✗"}');
         _logger.info('  Channels: ${_channels.length}');
         _logger.info('  Nodes: ${_nodes.length}');
         _logger.info('  LocalUser: ${_localUser != null ? "✓" : "✗"}');
@@ -556,6 +672,37 @@ class MeshtasticClient {
   void _handleDisconnection() {
     _logger.info('Device disconnected');
     _emitConnectionState(MeshtasticConnectionState.disconnected);
+    
+    // Clear state
+    _nodes.clear();
+    _myNodeInfo = null;
+    _config = null;
+    _moduleConfig = null;
+    _channels.clear();
+    _localUser = null;
+    _deviceMetadata = null;
+    _configComplete = false;
+    _expectedFromNum = 0;
+  }
+
+  /// Add the connected node to the nodes map
+  void _addConnectedNodeToMap() {
+    if (_myNodeInfo != null && _localUser != null) {
+      // Create a NodeInfo for our own node
+      final myNodeInfo = NodeInfo(
+        num: _myNodeInfo!.myNodeNum,
+        user: _localUser,
+        // Add other fields as they become available
+      );
+      
+      final myNodeWrapper = NodeInfoWrapper(myNodeInfo);
+      _nodes[_myNodeInfo!.myNodeNum] = myNodeWrapper;
+      _nodeController.add(myNodeWrapper);
+      
+      _logger.info(
+        'Added connected node to map: ${myNodeWrapper.displayName}',
+      );
+    }
   }
 
   /// Emit connection state change

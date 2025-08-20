@@ -96,6 +96,77 @@ class NodeInfoWrapper {
   double? get airUtilTx =>
       deviceMetrics?.hasAirUtilTx() == true ? deviceMetrics!.airUtilTx : null;
 
+  /// Uptime seconds
+  int? get uptimeSeconds =>
+      deviceMetrics?.hasUptimeSeconds() == true ? deviceMetrics!.uptimeSeconds : null;
+
+  /// User's ID
+  String? get userId => user?.id;
+
+  /// User's MAC address as hex string
+  String? get macAddress {
+    if (user?.hasMacaddr() != true) return null;
+    final bytes = user!.macaddr;
+    return bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
+  }
+
+  /// User's public key
+  List<int>? get publicKey => user?.hasPublicKey() == true ? user!.publicKey : null;
+
+  /// Whether node is via MQTT
+  bool get isViaMqtt => nodeInfo.viaMqtt;
+
+  /// Number of hops away
+  int get hopsAway => nodeInfo.hopsAway;
+
+  /// Whether node is favorited
+  bool get isFavorite => nodeInfo.isFavorite;
+
+  /// Whether node is ignored
+  bool get isIgnored => nodeInfo.isIgnored;
+
+  /// Whether the key is manually verified
+  bool get isKeyManuallyVerified => nodeInfo.isKeyManuallyVerified;
+
+  /// Position precision bits
+  int? get positionPrecisionBits =>
+      position?.hasPrecisionBits() == true ? position!.precisionBits : null;
+
+  /// Position timestamp
+  DateTime? get positionTime => position?.hasTime() == true 
+      ? DateTime.fromMillisecondsSinceEpoch(position!.time * 1000)
+      : null;
+
+  /// Altitude above HAE (Height Above Ellipsoid)
+  int? get altitudeHae => position?.hasAltitudeHae() == true ? position!.altitudeHae : null;
+
+  /// GPS accuracy
+  int? get gpsAccuracy => position?.hasGpsAccuracy() == true ? position!.gpsAccuracy : null;
+
+  /// Ground speed
+  int? get groundSpeed => position?.hasGroundSpeed() == true ? position!.groundSpeed : null;
+
+  /// Ground track
+  int? get groundTrack => position?.hasGroundTrack() == true ? position!.groundTrack : null;
+
+  /// Fix quality
+  int? get fixQuality => position?.hasFixQuality() == true ? position!.fixQuality : null;
+
+  /// Fix type
+  int? get fixType => position?.hasFixType() == true ? position!.fixType : null;
+
+  /// Satellites in view
+  int? get satsInView => position?.hasSatsInView() == true ? position!.satsInView : null;
+
+  /// Sensor ID
+  int? get sensorId => position?.hasSensorId() == true ? position!.sensorId : null;
+
+  /// Next update time
+  int? get nextUpdate => position?.hasNextUpdate() == true ? position!.nextUpdate : null;
+
+  /// Sequence number
+  int? get sequenceNumber => position?.hasSeqNumber() == true ? position!.seqNumber : null;
+
   /// Distance from our position (requires both nodes to have position)
   double? distanceFrom(NodeInfoWrapper otherNode) {
     if (latitude == null ||

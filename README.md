@@ -17,7 +17,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  meshtastic_flutter: ^0.0.1
+  meshtastic_flutter: ^0.1.0
 ```
 
 Complete the setup for ```permission_handler``` plugin as given [here](https://pub.dev/packages/permission_handler)
@@ -255,7 +255,7 @@ Contributions are welcome! Please read our contributing guidelines and submit pu
 
 ## License
 
-This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
+This project is licensed under the BSD-3 License - see the LICENSE file for details.
 
 ## Related Projects
 
