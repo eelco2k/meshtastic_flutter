@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meshtastic_flutter/meshtastic_flutter.dart';
-import 'package:meshtastic_flutter/generated/portnums.pb.dart';
 
 void main() {
   group('MeshtasticClient', () {

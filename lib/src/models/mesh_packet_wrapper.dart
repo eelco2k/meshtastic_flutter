@@ -77,7 +77,8 @@ class MeshPacketWrapper {
   bool get isPkiEncrypted => packet.pkiEncrypted;
 
   /// Transport mechanism used
-  MeshPacket_TransportMechanism? get transportMechanism => packet.transportMechanism;
+  MeshPacket_TransportMechanism? get transportMechanism =>
+      packet.transportMechanism;
 
   /// Whether this packet came via MQTT
   bool get isViaMqtt => packet.viaMqtt;
@@ -95,7 +96,8 @@ class MeshPacketWrapper {
   int? get txAfter => packet.hasTxAfter() ? packet.txAfter : null;
 
   /// Request ID from decoded data
-  int? get requestId => decoded?.hasRequestId() == true ? decoded!.requestId : null;
+  int? get requestId =>
+      decoded?.hasRequestId() == true ? decoded!.requestId : null;
 
   /// Reply ID from decoded data
   int? get replyId => decoded?.hasReplyId() == true ? decoded!.replyId : null;

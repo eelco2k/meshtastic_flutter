@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:meshtastic_flutter/meshtastic_flutter.dart';
 
@@ -22,8 +24,8 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
     // Listen to connection state changes
     _client.connectionStream.listen((state) {
       print('Connection state changed: $state');
-      
-      if (state == MeshtasticConnectionState.connected) {
+
+      if (state.state == MeshtasticConnectionState.connected) {
         _displayDeviceInfo();
       }
     });
@@ -96,7 +98,7 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
     print('MAC Address: ${node.macAddress}');
     print('User ID: ${node.userId}');
     print('Uptime: ${node.uptimeSeconds} seconds');
-    
+
     if (node.latitude != null && node.longitude != null) {
       print('Position: ${node.latitude}, ${node.longitude}');
       print('Altitude: ${node.altitude}m');
@@ -105,7 +107,7 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
       print('Ground Speed: ${node.groundSpeed}');
       print('Satellites: ${node.satsInView}');
     }
-    
+
     print('Voltage: ${node.voltage}V');
     print('Channel Utilization: ${node.channelUtilization}%');
     print('Air Util TX: ${node.airUtilTx}%');
@@ -128,11 +130,11 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
     print('Is Encrypted: ${packet.isEncrypted}');
     print('Is PKI Encrypted: ${packet.isPkiEncrypted}');
     print('Transport Mechanism: ${packet.transportMechanism}');
-    
+
     if (packet.isTextMessage) {
       print('Text Message: ${packet.textMessage}');
     }
-    
+
     if (packet.hasPublicKey) {
       print('Has Public Key: ${packet.publicKey?.length} bytes');
     }
@@ -141,9 +143,7 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Enhanced Meshtastic API Example'),
-      ),
+      appBar: AppBar(title: const Text('Enhanced Meshtastic API Example')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -173,7 +173,8 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
             StreamBuilder<ConnectionStatus>(
               stream: _client.connectionStream,
               builder: (context, snapshot) {
-                final state = snapshot.data ?? MeshtasticConnectionState.disconnected;
+                final state =
+                    snapshot.data ?? MeshtasticConnectionState.disconnected;
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -183,8 +184,12 @@ class _EnhancedApiExampleState extends State<EnhancedApiExample> {
                         Text('Connection State: $state'),
                         if (_client.isConnected) ...[
                           Text('Device: ${_client.connectedDeviceName}'),
-                          Text('Firmware: ${_client.firmwareVersion ?? "Unknown"}'),
-                          Text('Battery: ${_client.connectedNodeBatteryLevel ?? "Unknown"}%'),
+                          Text(
+                            'Firmware: ${_client.firmwareVersion ?? "Unknown"}',
+                          ),
+                          Text(
+                            'Battery: ${_client.connectedNodeBatteryLevel ?? "Unknown"}%',
+                          ),
                           Text('Nodes: ${_client.nodeCount}'),
                           Text('Channels: ${_client.channelCount}'),
                         ],

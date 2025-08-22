@@ -81,32 +81,32 @@ class MeshtasticClient {
   bool get isConfigured => _configComplete;
 
   // Convenience getters for critical information
-  
+
   /// Connected device's Bluetooth name
   String? get connectedDeviceName => _device?.platformName;
-  
+
   /// Connected device's Bluetooth remote ID
   String? get connectedDeviceId => _device?.remoteId.str;
-  
+
   /// Connected node info (self)
-  NodeInfoWrapper? get connectedNode => 
+  NodeInfoWrapper? get connectedNode =>
       _myNodeInfo != null ? _nodes[_myNodeInfo!.myNodeNum] : null;
-  
+
   /// Connected node's battery level
   int? get connectedNodeBatteryLevel => connectedNode?.batteryLevel;
-  
+
   /// Connected node's firmware version (from DeviceMetadata if available)
   String? get firmwareVersion => _deviceMetadata?.firmwareVersion;
-  
+
   /// Connected node's hardware model
   HardwareModel? get connectedNodeHardwareModel => _localUser?.hwModel;
-  
+
   /// Connected node's role
   Config_DeviceConfig_Role? get connectedNodeRole => _localUser?.role;
-  
+
   /// Connected node's long name
   String? get connectedNodeLongName => _localUser?.longName;
-  
+
   /// Connected node's short name
   String? get connectedNodeShortName => _localUser?.shortName;
 
@@ -550,7 +550,7 @@ class MeshtasticClient {
         _logger.info(
           'Received MyNodeInfo: myNodeNum=${_myNodeInfo!.myNodeNum.toRadixString(16)}',
         );
-        
+
         // Add the connected node to the nodes map if we have user info
         _addConnectedNodeToMap();
       }
@@ -574,7 +574,7 @@ class MeshtasticClient {
             'Received local User: longName=${_localUser!.longName}, '
             'shortName=${_localUser!.shortName}',
           );
-          
+
           // Now that we have user info, add connected node to map
           _addConnectedNodeToMap();
         }
@@ -626,7 +626,9 @@ class MeshtasticClient {
         _logger.info('  MyNodeInfo: ${_myNodeInfo != null ? "✓" : "✗"}');
         _logger.info('  Config: ${_config != null ? "✓" : "✗"}');
         _logger.info('  ModuleConfig: ${_moduleConfig != null ? "✓" : "✗"}');
-        _logger.info('  DeviceMetadata: ${_deviceMetadata != null ? "✓" : "✗"}');
+        _logger.info(
+          '  DeviceMetadata: ${_deviceMetadata != null ? "✓" : "✗"}',
+        );
         _logger.info('  Channels: ${_channels.length}');
         _logger.info('  Nodes: ${_nodes.length}');
         _logger.info('  LocalUser: ${_localUser != null ? "✓" : "✗"}');
@@ -672,7 +674,7 @@ class MeshtasticClient {
   void _handleDisconnection() {
     _logger.info('Device disconnected');
     _emitConnectionState(MeshtasticConnectionState.disconnected);
-    
+
     // Clear state
     _nodes.clear();
     _myNodeInfo = null;
@@ -694,14 +696,12 @@ class MeshtasticClient {
         user: _localUser,
         // Add other fields as they become available
       );
-      
+
       final myNodeWrapper = NodeInfoWrapper(myNodeInfo);
       _nodes[_myNodeInfo!.myNodeNum] = myNodeWrapper;
       _nodeController.add(myNodeWrapper);
-      
-      _logger.info(
-        'Added connected node to map: ${myNodeWrapper.displayName}',
-      );
+
+      _logger.info('Added connected node to map: ${myNodeWrapper.displayName}');
     }
   }
 

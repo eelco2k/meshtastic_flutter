@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'dart:math' as math;
 import '../../generated/mesh.pb.dart';
 import '../../generated/config.pb.dart';
@@ -97,8 +99,9 @@ class NodeInfoWrapper {
       deviceMetrics?.hasAirUtilTx() == true ? deviceMetrics!.airUtilTx : null;
 
   /// Uptime seconds
-  int? get uptimeSeconds =>
-      deviceMetrics?.hasUptimeSeconds() == true ? deviceMetrics!.uptimeSeconds : null;
+  int? get uptimeSeconds => deviceMetrics?.hasUptimeSeconds() == true
+      ? deviceMetrics!.uptimeSeconds
+      : null;
 
   /// User's ID
   String? get userId => user?.id;
@@ -111,7 +114,8 @@ class NodeInfoWrapper {
   }
 
   /// User's public key
-  List<int>? get publicKey => user?.hasPublicKey() == true ? user!.publicKey : null;
+  List<int>? get publicKey =>
+      user?.hasPublicKey() == true ? user!.publicKey : null;
 
   /// Whether node is via MQTT
   bool get isViaMqtt => nodeInfo.viaMqtt;
@@ -133,39 +137,48 @@ class NodeInfoWrapper {
       position?.hasPrecisionBits() == true ? position!.precisionBits : null;
 
   /// Position timestamp
-  DateTime? get positionTime => position?.hasTime() == true 
+  DateTime? get positionTime => position?.hasTime() == true
       ? DateTime.fromMillisecondsSinceEpoch(position!.time * 1000)
       : null;
 
   /// Altitude above HAE (Height Above Ellipsoid)
-  int? get altitudeHae => position?.hasAltitudeHae() == true ? position!.altitudeHae : null;
+  int? get altitudeHae =>
+      position?.hasAltitudeHae() == true ? position!.altitudeHae : null;
 
   /// GPS accuracy
-  int? get gpsAccuracy => position?.hasGpsAccuracy() == true ? position!.gpsAccuracy : null;
+  int? get gpsAccuracy =>
+      position?.hasGpsAccuracy() == true ? position!.gpsAccuracy : null;
 
   /// Ground speed
-  int? get groundSpeed => position?.hasGroundSpeed() == true ? position!.groundSpeed : null;
+  int? get groundSpeed =>
+      position?.hasGroundSpeed() == true ? position!.groundSpeed : null;
 
   /// Ground track
-  int? get groundTrack => position?.hasGroundTrack() == true ? position!.groundTrack : null;
+  int? get groundTrack =>
+      position?.hasGroundTrack() == true ? position!.groundTrack : null;
 
   /// Fix quality
-  int? get fixQuality => position?.hasFixQuality() == true ? position!.fixQuality : null;
+  int? get fixQuality =>
+      position?.hasFixQuality() == true ? position!.fixQuality : null;
 
   /// Fix type
   int? get fixType => position?.hasFixType() == true ? position!.fixType : null;
 
   /// Satellites in view
-  int? get satsInView => position?.hasSatsInView() == true ? position!.satsInView : null;
+  int? get satsInView =>
+      position?.hasSatsInView() == true ? position!.satsInView : null;
 
   /// Sensor ID
-  int? get sensorId => position?.hasSensorId() == true ? position!.sensorId : null;
+  int? get sensorId =>
+      position?.hasSensorId() == true ? position!.sensorId : null;
 
   /// Next update time
-  int? get nextUpdate => position?.hasNextUpdate() == true ? position!.nextUpdate : null;
+  int? get nextUpdate =>
+      position?.hasNextUpdate() == true ? position!.nextUpdate : null;
 
   /// Sequence number
-  int? get sequenceNumber => position?.hasSeqNumber() == true ? position!.seqNumber : null;
+  int? get sequenceNumber =>
+      position?.hasSeqNumber() == true ? position!.seqNumber : null;
 
   /// Distance from our position (requires both nodes to have position)
   double? distanceFrom(NodeInfoWrapper otherNode) {
