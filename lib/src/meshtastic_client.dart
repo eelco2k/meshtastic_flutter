@@ -421,7 +421,7 @@ class MeshtasticClient {
     _logger.info(
       'Sending text message: "$message" from ${packet.from.toRadixString(16)} to ${packet.to.toRadixString(16)} on channel $channel',
     );
-    await _sendPacket(packet);
+    await sendPacket(packet);
   }
 
   /// Send a position update
@@ -463,11 +463,32 @@ class MeshtasticClient {
     _logger.info(
       'Sending position: lat=$latitude, lon=$longitude, alt=$altitude',
     );
-    await _sendPacket(packet);
+    await sendPacket(packet);
   }
 
-  /// Send a packet to the device
-  Future<void> _sendPacket(MeshPacket packet) async {
+  /// Send a custom packet to the device
+  /// 
+  /// This method allows sending any type of MeshPacket, including:
+  /// - Configuration packets (Config, ModuleConfig)
+  /// - Custom application packets
+  /// - Administrative packets
+  /// - Text messages with custom routing
+  /// 
+  /// Example usage:
+  /// ```dart
+  /// // Send a config packet
+  /// final config = Config(device: Config_DeviceConfig(role: Config_DeviceConfig_Role.ROUTER));
+  /// final adminMessage = AdminMessage(setConfig: config);
+  /// final configPacket = MeshPacket(
+  ///   to: 0xffffffff, // broadcast
+  ///   decoded: Data(
+  ///     portnum: PortNum.ADMIN_APP,
+  ///     payload: adminMessage.writeToBuffer(),
+  ///   ),
+  /// );
+  /// await client.sendPacket(configPacket);
+  /// ```
+  Future<void> sendPacket(MeshPacket packet) async {
     if (_toRadioChar == null) {
       throw const ConnectionException('ToRadio characteristic not available');
     }
