@@ -181,24 +181,6 @@ class MeshtasticClient {
   /// Excluded modules bitmask
   int? get excludedModules => _deviceMetadata?.excludedModules;
 
-  /// Debug method to check position information for all nodes
-  void debugPositionInfo() {
-    _logger.info('=== Position Debug Information ===');
-    _logger.info('Total nodes: ${_nodes.length}');
-
-    for (final entry in _nodes.entries) {
-      final nodeId = entry.key;
-      final node = entry.value;
-
-      _logger.info('Node ${nodeId.toRadixString(16)} (${node.displayName}):');
-      _logger.info(
-        '  Calculated coordinates: lat=${node.latitude}, lon=${node.longitude}, alt=${node.altitude}',
-      );
-      _logger.info('  ${node.positionDebugInfo.split('\n').join('\n  ')}');
-    }
-    _logger.info('================================');
-  }
-
   /// Initialize the client and request necessary permissions
   Future<void> initialize() async {
     _logger.info('Initializing Meshtastic client');
@@ -590,8 +572,10 @@ class MeshtasticClient {
           'Received MyNodeInfo: myNodeNum=${_myNodeInfo!.myNodeNum.toRadixString(16)}',
         );
 
-        // Add the connected node to the nodes map if we have user info
-        _addConnectedNodeToMap();
+        // Only add the connected node to the nodes map if we already have user info
+        if (_localUser != null) {
+          _addConnectedNodeToMap();
+        }
       }
 
       if (fromRadio.hasNodeInfo()) {
@@ -802,18 +786,57 @@ class MeshtasticClient {
   /// Add the connected node to the nodes map
   void _addConnectedNodeToMap() {
     if (_myNodeInfo != null && _localUser != null) {
-      // Create a NodeInfo for our own node
-      final myNodeInfo = NodeInfo(
-        num: _myNodeInfo!.myNodeNum,
-        user: _localUser,
-        // Add other fields as they become available
-      );
+      final myNodeNum = _myNodeInfo!.myNodeNum;
 
-      final myNodeWrapper = NodeInfoWrapper(myNodeInfo);
-      _nodes[_myNodeInfo!.myNodeNum] = myNodeWrapper;
-      _nodeController.add(myNodeWrapper);
+      // Check if node already exists with any data
+      final existingNode = _nodes[myNodeNum];
 
-      _logger.info('Added connected node to map: ${myNodeWrapper.displayName}');
+      if (existingNode != null) {
+        // Update existing node with user info while preserving all existing data
+        final updatedNodeInfo = NodeInfo(
+          num: myNodeNum,
+          user: _localUser,
+          position: existingNode.nodeInfo.hasPosition()
+              ? existingNode.nodeInfo.position
+              : null,
+          snr: existingNode.nodeInfo.snr,
+          lastHeard: existingNode.nodeInfo.hasLastHeard()
+              ? existingNode.nodeInfo.lastHeard
+              : null,
+          deviceMetrics: existingNode.nodeInfo.hasDeviceMetrics()
+              ? existingNode.nodeInfo.deviceMetrics
+              : null,
+          channel: existingNode.nodeInfo.channel,
+          viaMqtt: existingNode.nodeInfo.viaMqtt,
+          hopsAway: existingNode.nodeInfo.hopsAway,
+          isFavorite: existingNode.nodeInfo.isFavorite,
+          isIgnored: existingNode.nodeInfo.isIgnored,
+          isKeyManuallyVerified: existingNode.nodeInfo.isKeyManuallyVerified,
+        );
+
+        final myNodeWrapper = NodeInfoWrapper(updatedNodeInfo);
+        _nodes[myNodeNum] = myNodeWrapper;
+        _nodeController.add(myNodeWrapper);
+
+        _logger.info(
+          'Updated connected node with user info while preserving existing data: ${myNodeWrapper.displayName}',
+        );
+      } else {
+        // Create a new NodeInfo for our own node
+        final myNodeInfo = NodeInfo(
+          num: myNodeNum,
+          user: _localUser,
+          // Add other fields as they become available
+        );
+
+        final myNodeWrapper = NodeInfoWrapper(myNodeInfo);
+        _nodes[myNodeNum] = myNodeWrapper;
+        _nodeController.add(myNodeWrapper);
+
+        _logger.info(
+          'Added connected node to map: ${myNodeWrapper.displayName}',
+        );
+      }
     }
   }
 
