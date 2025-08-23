@@ -1,3 +1,15 @@
+## 0.1.1
+
+* **MAJOR FIX**: Fixed position data not being updated from position packets
+* Added proper handling of `POSITION_APP` packets to update node position information
+* Added `positionData` getter to `MeshPacketWrapper` to extract position from position packets
+* Added `_handlePositionUpdate` method to process position updates and update node information
+* Added `debugPositionInfo()` method to help debug position data issues
+* Added comprehensive position debugging example (`position_debugging_example.dart`)
+* Enhanced position logging and debugging capabilities
+* Fixed nodes not showing coordinates when using fixed position settings
+* Improved position packet processing for better real-time location updates
+
 ## 0.1.0
 
 * **MAJOR ENHANCEMENT**: Added comprehensive convenience getters throughout all wrapper classes

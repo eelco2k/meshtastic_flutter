@@ -79,6 +79,53 @@ class NodeInfoWrapper {
   int? get altitude =>
       position?.hasAltitude() == true ? position!.altitude : null;
 
+  /// Debug information about position data
+  String get positionDebugInfo {
+    if (position == null) {
+      return 'Position object: null';
+    }
+
+    final pos = position!;
+    final info = StringBuffer();
+    info.writeln('Position object: exists');
+    info.writeln('  hasLatitudeI: ${pos.hasLatitudeI()}');
+    info.writeln('  hasLongitudeI: ${pos.hasLongitudeI()}');
+
+    if (pos.hasLatitudeI()) {
+      info.writeln('  latitudeI: ${pos.latitudeI}');
+      info.writeln('  calculated latitude: ${pos.latitudeI / 1e7}');
+    }
+
+    if (pos.hasLongitudeI()) {
+      info.writeln('  longitudeI: ${pos.longitudeI}');
+      info.writeln('  calculated longitude: ${pos.longitudeI / 1e7}');
+    }
+
+    info.writeln('  hasAltitude: ${pos.hasAltitude()}');
+    if (pos.hasAltitude()) {
+      info.writeln('  altitude: ${pos.altitude}');
+    }
+
+    info.writeln('  hasTime: ${pos.hasTime()}');
+    if (pos.hasTime()) {
+      info.writeln(
+        '  time: ${pos.time} (${DateTime.fromMillisecondsSinceEpoch(pos.time * 1000)})',
+      );
+    }
+
+    info.writeln('  hasLocationSource: ${pos.hasLocationSource()}');
+    if (pos.hasLocationSource()) {
+      info.writeln('  locationSource: ${pos.locationSource}');
+    }
+
+    info.writeln('  hasPrecisionBits: ${pos.hasPrecisionBits()}');
+    if (pos.hasPrecisionBits()) {
+      info.writeln('  precisionBits: ${pos.precisionBits}');
+    }
+
+    return info.toString().trimRight();
+  }
+
   /// Battery level percentage (if device metrics available)
   int? get batteryLevel => deviceMetrics?.hasBatteryLevel() == true
       ? deviceMetrics!.batteryLevel

@@ -105,6 +105,16 @@ class MeshPacketWrapper {
   /// Emoji from decoded data
   int? get emoji => decoded?.hasEmoji() == true ? decoded!.emoji : null;
 
+  /// Get position data from position packets
+  Position? get positionData {
+    if (!isPosition || decoded == null) return null;
+    try {
+      return Position.fromBuffer(decoded!.payload);
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// Get the text message content (if this is a text message)
   String? get textMessage {
     if (!isTextMessage || decoded == null) return null;

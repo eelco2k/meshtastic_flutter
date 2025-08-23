@@ -181,6 +181,24 @@ class MeshtasticClient {
   /// Excluded modules bitmask
   int? get excludedModules => _deviceMetadata?.excludedModules;
 
+  /// Debug method to check position information for all nodes
+  void debugPositionInfo() {
+    _logger.info('=== Position Debug Information ===');
+    _logger.info('Total nodes: ${_nodes.length}');
+
+    for (final entry in _nodes.entries) {
+      final nodeId = entry.key;
+      final node = entry.value;
+
+      _logger.info('Node ${nodeId.toRadixString(16)} (${node.displayName}):');
+      _logger.info(
+        '  Calculated coordinates: lat=${node.latitude}, lon=${node.longitude}, alt=${node.altitude}',
+      );
+      _logger.info('  ${node.positionDebugInfo.split('\n').join('\n  ')}');
+    }
+    _logger.info('================================');
+  }
+
   /// Initialize the client and request necessary permissions
   Future<void> initialize() async {
     _logger.info('Initializing Meshtastic client');
@@ -467,13 +485,13 @@ class MeshtasticClient {
   }
 
   /// Send a custom packet to the device
-  /// 
+  ///
   /// This method allows sending any type of MeshPacket, including:
   /// - Configuration packets (Config, ModuleConfig)
   /// - Custom application packets
   /// - Administrative packets
   /// - Text messages with custom routing
-  /// 
+  ///
   /// Example usage:
   /// ```dart
   /// // Send a config packet
@@ -582,7 +600,9 @@ class MeshtasticClient {
         _nodeController.add(nodeInfo);
         _logger.info(
           'Received NodeInfo: num=${nodeInfo.num.toRadixString(16)}, '
-          'displayName=${nodeInfo.displayName}',
+          'displayName=${nodeInfo.displayName}, '
+          'hasPosition=${nodeInfo.position != null}, '
+          'latitude=${nodeInfo.latitude}, longitude=${nodeInfo.longitude}',
         );
 
         // Extract user info from the node info
@@ -634,6 +654,12 @@ class MeshtasticClient {
       if (fromRadio.hasPacket()) {
         final packetWrapper = MeshPacketWrapper(fromRadio.packet);
         _packetController.add(packetWrapper);
+
+        // Handle position updates from mesh packets
+        if (packetWrapper.isPosition) {
+          _handlePositionUpdate(packetWrapper);
+        }
+
         _logger.info('Received MeshPacket: ${packetWrapper.toString()}');
       }
 
@@ -674,6 +700,71 @@ class MeshtasticClient {
         // Read new data from FromRadio
         _readFromRadio();
       }
+    }
+  }
+
+  /// Handle position updates from mesh packets
+  void _handlePositionUpdate(MeshPacketWrapper packetWrapper) {
+    final position = packetWrapper.positionData;
+    final fromNodeId = packetWrapper.from;
+
+    if (position == null) {
+      _logger.warning('Invalid position packet received - no position data');
+      return;
+    }
+
+    // Find the existing node or create a new one
+    NodeInfoWrapper? existingNode = _nodes[fromNodeId];
+
+    if (existingNode != null) {
+      // Update the existing node's position
+      final updatedNodeInfo = NodeInfo(
+        num: existingNode.nodeInfo.num,
+        user: existingNode.nodeInfo.hasUser()
+            ? existingNode.nodeInfo.user
+            : null,
+        position: position,
+        snr: existingNode.nodeInfo.snr,
+        lastHeard: existingNode.nodeInfo.hasLastHeard()
+            ? existingNode.nodeInfo.lastHeard
+            : null,
+        deviceMetrics: existingNode.nodeInfo.hasDeviceMetrics()
+            ? existingNode.nodeInfo.deviceMetrics
+            : null,
+        channel: existingNode.nodeInfo.channel,
+        viaMqtt: existingNode.nodeInfo.viaMqtt,
+        hopsAway: existingNode.nodeInfo.hopsAway,
+        isFavorite: existingNode.nodeInfo.isFavorite,
+        isIgnored: existingNode.nodeInfo.isIgnored,
+        isKeyManuallyVerified: existingNode.nodeInfo.isKeyManuallyVerified,
+      );
+
+      final updatedWrapper = NodeInfoWrapper(updatedNodeInfo);
+      _nodes[fromNodeId] = updatedWrapper;
+      _nodeController.add(updatedWrapper);
+
+      _logger.info(
+        'Updated position for node ${fromNodeId.toRadixString(16)}: '
+        'lat=${position.hasLatitudeI() ? position.latitudeI / 1e7 : 'N/A'}, '
+        'lon=${position.hasLongitudeI() ? position.longitudeI / 1e7 : 'N/A'}',
+      );
+    } else {
+      // Create a new node info with just the position data
+      final newNodeInfo = NodeInfo(
+        num: fromNodeId,
+        position: position,
+        lastHeard: (DateTime.now().millisecondsSinceEpoch / 1000).round(),
+      );
+
+      final newWrapper = NodeInfoWrapper(newNodeInfo);
+      _nodes[fromNodeId] = newWrapper;
+      _nodeController.add(newWrapper);
+
+      _logger.info(
+        'Created new node ${fromNodeId.toRadixString(16)} with position: '
+        'lat=${position.hasLatitudeI() ? position.latitudeI / 1e7 : 'N/A'}, '
+        'lon=${position.hasLongitudeI() ? position.longitudeI / 1e7 : 'N/A'}',
+      );
     }
   }
 
