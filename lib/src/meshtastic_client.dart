@@ -284,6 +284,9 @@ class MeshtasticClient {
 
       // Connect to device
       await device.connect(timeout: const Duration(seconds: 30));
+      
+      // Give BLE stack time to stabilize, especially important after hot restart
+      await Future.delayed(const Duration(milliseconds: 1000));
 
       // Discover services
       final services = await device.discoverServices();
@@ -332,13 +335,21 @@ class MeshtasticClient {
       );
 
       // Set MTU to 512
-      await device.requestMtu(512);
+      try {
+        await device.requestMtu(512);
+        _logger.info('MTU set to 512');
+      } catch (e) {
+        _logger.warning('Failed to set MTU, using default: $e');
+      }
 
       // Enable notifications on FromNum
       await _fromNumChar!.setNotifyValue(true);
       _fromNumSubscription = _fromNumChar!.lastValueStream.listen(
         _handleFromNumNotification,
       );
+      
+      // Give notifications time to be fully established
+      await Future.delayed(const Duration(milliseconds: 500));
 
       _emitConnectionState(MeshtasticConnectionState.configuring);
 
@@ -520,43 +531,133 @@ class MeshtasticClient {
   /// Start the configuration process
   Future<void> _startConfiguration() async {
     _logger.info('Starting configuration process');
+    
+    try {
+      // Reset configuration state
+      _configComplete = false;
+      _expectedFromNum = 0;
+      
+      // Clear any existing state that might interfere
+      _nodes.clear();
+      _myNodeInfo = null;
+      _config = null;
+      _moduleConfig = null;
+      _channels.clear();
+      _localUser = null;
+      _deviceMetadata = null;
 
-    // Send wantConfigId to start configuration download
-    final wantConfig = ToRadio(wantConfigId: 0);
-    // Check if characteristic supports write without response
-    final supportsWriteWithoutResponse =
-        _toRadioChar!.properties.writeWithoutResponse;
-    await _toRadioChar!.write(
-      wantConfig.writeToBuffer(),
-      withoutResponse: supportsWriteWithoutResponse,
-    );
+      // Give the device time to settle after connection
+      await Future.delayed(const Duration(milliseconds: 200));
 
-    // Start reading configuration data
-    await _readConfiguration();
+      // Send wantConfigId to start configuration download
+      final wantConfig = ToRadio(wantConfigId: 0);
+      
+      // Check if characteristic supports write without response
+      final supportsWriteWithoutResponse =
+          _toRadioChar!.properties.writeWithoutResponse;
+      
+      await _toRadioChar!.write(
+        wantConfig.writeToBuffer(),
+        withoutResponse: supportsWriteWithoutResponse,
+      );
+      
+      _logger.info('Sent wantConfigId request');
+
+      // Give device time to prepare configuration data
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      // Start reading configuration data with timeout
+      await _readConfiguration();
+    } catch (e) {
+      _logger.severe('Configuration failed: $e');
+      _emitConnectionState(
+        MeshtasticConnectionState.error,
+        errorMessage: 'Configuration failed: $e',
+      );
+      rethrow;
+    }
   }
 
   /// Read configuration data from the device
   Future<void> _readConfiguration() async {
     _logger.info('Reading configuration from device');
-
-    while (!_configComplete) {
-      try {
-        final data = await _fromRadioChar!.read();
-        if (data.isEmpty) {
-          _logger.info('Configuration complete - received empty packet');
-          _configComplete = true;
-          _emitConnectionState(MeshtasticConnectionState.connected);
-          break;
-        }
-
-        await _processFromRadioData(data);
-
-        // Small delay to prevent overwhelming the device
-        await Future.delayed(const Duration(milliseconds: 50));
-      } catch (e) {
-        _logger.warning('Error reading configuration: $e');
-        break;
+    
+    const maxRetries = 3;
+    const configTimeout = Duration(seconds: 30);
+    const readDelay = Duration(milliseconds: 100);
+    int consecutiveEmptyReads = 0;
+    int retryCount = 0;
+    
+    final configTimer = Timer(configTimeout, () {
+      if (!_configComplete) {
+        _logger.warning('Configuration timeout after ${configTimeout.inSeconds} seconds');
+        _configComplete = true;
       }
+    });
+
+    try {
+      while (!_configComplete && retryCount < maxRetries) {
+        try {
+          final data = await _fromRadioChar!.read();
+          
+          if (data.isEmpty) {
+            consecutiveEmptyReads++;
+            _logger.fine('Empty read ($consecutiveEmptyReads/3)');
+            
+            // If we get 3 consecutive empty reads, configuration is complete
+            if (consecutiveEmptyReads >= 3) {
+              _logger.info('Configuration complete - received 3 consecutive empty packets');
+              _configComplete = true;
+              _emitConnectionState(MeshtasticConnectionState.connected);
+              break;
+            }
+          } else {
+            // Reset empty read counter when we get data
+            consecutiveEmptyReads = 0;
+            await _processFromRadioData(data);
+          }
+
+          // Adaptive delay - shorter for active reads, longer for empty reads
+          await Future.delayed(data.isEmpty ? 
+            Duration(milliseconds: 150) : readDelay);
+            
+        } catch (e) {
+          _logger.warning('Error reading configuration (attempt ${retryCount + 1}): $e');
+          retryCount++;
+          
+          if (retryCount < maxRetries) {
+            _logger.info('Retrying configuration read in 1 second...');
+            await Future.delayed(const Duration(seconds: 1));
+            
+            // Reset the wantConfigId request
+            try {
+              final wantConfig = ToRadio(wantConfigId: 0);
+              final supportsWriteWithoutResponse =
+                  _toRadioChar!.properties.writeWithoutResponse;
+              await _toRadioChar!.write(
+                wantConfig.writeToBuffer(),
+                withoutResponse: supportsWriteWithoutResponse,
+              );
+              _logger.info('Resent wantConfigId request');
+            } catch (writeError) {
+              _logger.warning('Failed to resend wantConfigId: $writeError');
+            }
+          } else {
+            _logger.severe('Configuration failed after $maxRetries attempts');
+            _emitConnectionState(
+              MeshtasticConnectionState.error,
+              errorMessage: 'Configuration failed after $maxRetries attempts',
+            );
+            break;
+          }
+        }
+      }
+    } finally {
+      configTimer.cancel();
+    }
+    
+    if (_configComplete) {
+      _logger.info('Configuration completed successfully. Nodes: ${_nodes.length}, Channels: ${_channels.length}');
     }
   }
 
