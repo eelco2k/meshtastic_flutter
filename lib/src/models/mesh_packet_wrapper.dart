@@ -115,6 +115,12 @@ class MeshPacketWrapper {
     }
   }
 
+  /// Get admin data from admin packets
+  List<int>? get adminData {
+    if (!isAdmin || decoded == null) return null;
+    return decoded!.payload;
+  }
+
   /// Get the text message content (if this is a text message)
   String? get textMessage {
     if (!isTextMessage || decoded == null) return null;

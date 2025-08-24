@@ -3,6 +3,7 @@ export 'src/models/connection_state.dart';
 export 'src/models/mesh_packet_wrapper.dart';
 export 'src/models/node_info.dart';
 export 'src/models/meshtastic_config.dart';
+export 'src/helpers/channel_config_helper.dart';
 export 'src/exceptions/meshtastic_exceptions.dart';
 export 'generated/admin.pb.dart';
 export 'generated/admin.pbenum.dart';

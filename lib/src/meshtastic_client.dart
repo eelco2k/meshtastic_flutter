@@ -11,10 +11,12 @@ import '../generated/config.pb.dart';
 import '../generated/module_config.pb.dart';
 import '../generated/channel.pb.dart';
 import '../generated/portnums.pb.dart';
+import '../generated/admin.pb.dart';
 import 'models/connection_state.dart';
 import 'models/mesh_packet_wrapper.dart';
 import 'models/node_info.dart';
 import 'models/meshtastic_config.dart';
+import 'helpers/channel_config_helper.dart';
 import 'exceptions/meshtastic_exceptions.dart';
 
 /// Main client for communicating with Meshtastic devices over BLE
@@ -745,6 +747,11 @@ class MeshtasticClient {
           _handlePositionUpdate(packetWrapper);
         }
 
+        // Handle admin messages (including session key responses)
+        if (packetWrapper.isAdmin) {
+          _handleAdminMessage(packetWrapper);
+        }
+
         _logger.info('Received MeshPacket: ${packetWrapper.toString()}');
       }
 
@@ -785,6 +792,40 @@ class MeshtasticClient {
         // Read new data from FromRadio
         _readFromRadio();
       }
+    }
+  }
+
+  /// Handle admin messages from mesh packets
+  void _handleAdminMessage(MeshPacketWrapper packetWrapper) {
+    try {
+      final adminData = packetWrapper.adminData;
+      if (adminData == null) {
+        _logger.warning('Admin packet received but no admin data found');
+        return;
+      }
+
+      final adminMessage = AdminMessage.fromBuffer(adminData);
+      
+      // Process session key responses
+      ChannelConfigHelper.processAdminResponse(adminMessage);
+      
+      if (adminMessage.hasSessionPasskey()) {
+        _logger.info('Received session key from admin message');
+      }
+      
+      // Log other admin message types for debugging
+      if (adminMessage.hasGetChannelResponse()) {
+        _logger.info('Received channel response');
+      }
+      if (adminMessage.hasGetConfigResponse()) {
+        _logger.info('Received config response');
+      }
+      if (adminMessage.hasGetOwnerResponse()) {
+        _logger.info('Received owner response');
+      }
+      
+    } catch (e) {
+      _logger.warning('Error processing admin message: $e');
     }
   }
 
