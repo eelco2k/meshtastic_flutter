@@ -64,6 +64,11 @@ class MeshtasticClient {
   Stream<MeshPacketWrapper> get packetStream => _packetController.stream;
   Stream<NodeInfoWrapper> get nodeStream => _nodeController.stream;
 
+  // Controllers
+  StreamController<ConnectionStatus> get connectionController = _connectionController;
+  StreamController<MeshPacketWrapper> get packetController = _packetController;
+  StreamController<NodeInfoWrapper> get nodeController = _nodeController;
+
   // Getters for current state
   Map<int, NodeInfoWrapper> get nodes => Map.unmodifiable(_nodes);
   MyNodeInfo? get myNodeInfo => _myNodeInfo;
