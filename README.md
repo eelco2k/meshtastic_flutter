@@ -287,6 +287,26 @@ This package implements the complete Meshtastic Bluetooth protocol:
 - Administrative commands (`ADMIN_APP`)
 - Routing information (`ROUTING_APP`)
 
+
+### Generate PROTOBUFS
+
+Because each flutter protobuf version required their own build. you need to generate the protobufs for the correct version:
+
+```
+install buf:
+
+brew install bufbuild/buf/buf
+
+activate correct version of protoc plugin:
+
+dart pub global activate protoc_plugin 21.1.2
+
+generate the protobufs:
+
+buf generate buf.build/meshtastic/protobufs
+```
+
+
 ## Contributing
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests to our repository.
