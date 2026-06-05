@@ -1,14 +1,13 @@
-// This is a generated file - do not edit.
 //
-// Generated from meshtastic/portnums.proto.
-
-// @dart = 3.3
+//  Generated code. Do not modify.
+//  source: meshtastic/portnums.proto
+//
+// @dart = 2.12
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: curly_braces_in_flow_control_structures
-// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names, unused_import
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -31,9 +30,12 @@ const PortNum$json = {
     {'1': 'DETECTION_SENSOR_APP', '2': 10},
     {'1': 'ALERT_APP', '2': 11},
     {'1': 'KEY_VERIFICATION_APP', '2': 12},
+    {'1': 'REMOTE_SHELL_APP', '2': 13},
     {'1': 'REPLY_APP', '2': 32},
     {'1': 'IP_TUNNEL_APP', '2': 33},
     {'1': 'PAXCOUNTER_APP', '2': 34},
+    {'1': 'STORE_FORWARD_PLUSPLUS_APP', '2': 35},
+    {'1': 'NODE_STATUS_APP', '2': 36},
     {'1': 'SERIAL_APP', '2': 64},
     {'1': 'STORE_FORWARD_APP', '2': 65},
     {'1': 'RANGE_TEST_APP', '2': 66},
@@ -45,8 +47,11 @@ const PortNum$json = {
     {'1': 'ATAK_PLUGIN', '2': 72},
     {'1': 'MAP_REPORT_APP', '2': 73},
     {'1': 'POWERSTRESS_APP', '2': 74},
+    {'1': 'LORAWAN_BRIDGE', '2': 75},
     {'1': 'RETICULUM_TUNNEL_APP', '2': 76},
     {'1': 'CAYENNE_APP', '2': 77},
+    {'1': 'ATAK_PLUGIN_V2', '2': 78},
+    {'1': 'GROUPALARM_APP', '2': 112},
     {'1': 'PRIVATE_APP', '2': 256},
     {'1': 'ATAK_FORWARDER', '2': 257},
     {'1': 'MAX', '2': 511},
@@ -59,11 +64,14 @@ final $typed_data.Uint8List portNumDescriptor = $convert.base64Decode(
     '9URV9IQVJEV0FSRV9BUFAQAhIQCgxQT1NJVElPTl9BUFAQAxIQCgxOT0RFSU5GT19BUFAQBBIP'
     'CgtST1VUSU5HX0FQUBAFEg0KCUFETUlOX0FQUBAGEh8KG1RFWFRfTUVTU0FHRV9DT01QUkVTU0'
     'VEX0FQUBAHEhAKDFdBWVBPSU5UX0FQUBAIEg0KCUFVRElPX0FQUBAJEhgKFERFVEVDVElPTl9T'
-    'RU5TT1JfQVBQEAoSDQoJQUxFUlRfQVBQEAsSGAoUS0VZX1ZFUklGSUNBVElPTl9BUFAQDBINCg'
-    'lSRVBMWV9BUFAQIBIRCg1JUF9UVU5ORUxfQVBQECESEgoOUEFYQ09VTlRFUl9BUFAQIhIOCgpT'
-    'RVJJQUxfQVBQEEASFQoRU1RPUkVfRk9SV0FSRF9BUFAQQRISCg5SQU5HRV9URVNUX0FQUBBCEh'
-    'EKDVRFTEVNRVRSWV9BUFAQQxILCgdaUFNfQVBQEEQSEQoNU0lNVUxBVE9SX0FQUBBFEhIKDlRS'
-    'QUNFUk9VVEVfQVBQEEYSFAoQTkVJR0hCT1JJTkZPX0FQUBBHEg8KC0FUQUtfUExVR0lOEEgSEg'
-    'oOTUFQX1JFUE9SVF9BUFAQSRITCg9QT1dFUlNUUkVTU19BUFAQShIYChRSRVRJQ1VMVU1fVFVO'
-    'TkVMX0FQUBBMEg8KC0NBWUVOTkVfQVBQEE0SEAoLUFJJVkFURV9BUFAQgAISEwoOQVRBS19GT1'
-    'JXQVJERVIQgQISCAoDTUFYEP8D');
+    'RU5TT1JfQVBQEAoSDQoJQUxFUlRfQVBQEAsSGAoUS0VZX1ZFUklGSUNBVElPTl9BUFAQDBIUCh'
+    'BSRU1PVEVfU0hFTExfQVBQEA0SDQoJUkVQTFlfQVBQECASEQoNSVBfVFVOTkVMX0FQUBAhEhIK'
+    'DlBBWENPVU5URVJfQVBQECISHgoaU1RPUkVfRk9SV0FSRF9QTFVTUExVU19BUFAQIxITCg9OT0'
+    'RFX1NUQVRVU19BUFAQJBIOCgpTRVJJQUxfQVBQEEASFQoRU1RPUkVfRk9SV0FSRF9BUFAQQRIS'
+    'Cg5SQU5HRV9URVNUX0FQUBBCEhEKDVRFTEVNRVRSWV9BUFAQQxILCgdaUFNfQVBQEEQSEQoNU0'
+    'lNVUxBVE9SX0FQUBBFEhIKDlRSQUNFUk9VVEVfQVBQEEYSFAoQTkVJR0hCT1JJTkZPX0FQUBBH'
+    'Eg8KC0FUQUtfUExVR0lOEEgSEgoOTUFQX1JFUE9SVF9BUFAQSRITCg9QT1dFUlNUUkVTU19BUF'
+    'AQShISCg5MT1JBV0FOX0JSSURHRRBLEhgKFFJFVElDVUxVTV9UVU5ORUxfQVBQEEwSDwoLQ0FZ'
+    'RU5ORV9BUFAQTRISCg5BVEFLX1BMVUdJTl9WMhBOEhIKDkdST1VQQUxBUk1fQVBQEHASEAoLUF'
+    'JJVkFURV9BUFAQgAISEwoOQVRBS19GT1JXQVJERVIQgQISCAoDTUFYEP8D');
+

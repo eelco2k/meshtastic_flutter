@@ -1,14 +1,13 @@
-// This is a generated file - do not edit.
 //
-// Generated from meshtastic/device_ui.proto.
-
-// @dart = 3.3
+//  Generated code. Do not modify.
+//  source: meshtastic/device_ui.proto
+//
+// @dart = 2.12
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: curly_braces_in_flow_control_structures
-// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names, unused_import
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -40,8 +39,8 @@ const Theme$json = {
 };
 
 /// Descriptor for `Theme`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List themeDescriptor = $convert
-    .base64Decode('CgVUaGVtZRIICgREQVJLEAASCQoFTElHSFQQARIHCgNSRUQQAg==');
+final $typed_data.Uint8List themeDescriptor = $convert.base64Decode(
+    'CgVUaGVtZRIICgREQVJLEAASCQoFTElHSFQQARIHCgNSRUQQAg==');
 
 @$core.Deprecated('Use languageDescriptor instead')
 const Language$json = {
@@ -65,6 +64,8 @@ const Language$json = {
     {'1': 'SLOVENIAN', '2': 15},
     {'1': 'UKRAINIAN', '2': 16},
     {'1': 'BULGARIAN', '2': 17},
+    {'1': 'CZECH', '2': 18},
+    {'1': 'DANISH', '2': 19},
     {'1': 'SIMPLIFIED_CHINESE', '2': 30},
     {'1': 'TRADITIONAL_CHINESE', '2': 31},
   ],
@@ -76,91 +77,47 @@ final $typed_data.Uint8List languageDescriptor = $convert.base64Decode(
     'lBThADEg4KClBPUlRVR1VFU0UQBBILCgdTUEFOSVNIEAUSCwoHU1dFRElTSBAGEgsKB0ZJTk5J'
     'U0gQBxIKCgZQT0xJU0gQCBILCgdUVVJLSVNIEAkSCwoHU0VSQklBThAKEgsKB1JVU1NJQU4QCx'
     'IJCgVEVVRDSBAMEgkKBUdSRUVLEA0SDQoJTk9SV0VHSUFOEA4SDQoJU0xPVkVOSUFOEA8SDQoJ'
-    'VUtSQUlOSUFOEBASDQoJQlVMR0FSSUFOEBESFgoSU0lNUExJRklFRF9DSElORVNFEB4SFwoTVF'
-    'JBRElUSU9OQUxfQ0hJTkVTRRAf');
+    'VUtSQUlOSUFOEBASDQoJQlVMR0FSSUFOEBESCQoFQ1pFQ0gQEhIKCgZEQU5JU0gQExIWChJTSU'
+    '1QTElGSUVEX0NISU5FU0UQHhIXChNUUkFESVRJT05BTF9DSElORVNFEB8=');
 
 @$core.Deprecated('Use deviceUIConfigDescriptor instead')
 const DeviceUIConfig$json = {
   '1': 'DeviceUIConfig',
   '2': [
     {'1': 'version', '3': 1, '4': 1, '5': 13, '10': 'version'},
-    {
-      '1': 'screen_brightness',
-      '3': 2,
-      '4': 1,
-      '5': 13,
-      '10': 'screenBrightness'
-    },
+    {'1': 'screen_brightness', '3': 2, '4': 1, '5': 13, '10': 'screenBrightness'},
     {'1': 'screen_timeout', '3': 3, '4': 1, '5': 13, '10': 'screenTimeout'},
     {'1': 'screen_lock', '3': 4, '4': 1, '5': 8, '10': 'screenLock'},
     {'1': 'settings_lock', '3': 5, '4': 1, '5': 8, '10': 'settingsLock'},
     {'1': 'pin_code', '3': 6, '4': 1, '5': 13, '10': 'pinCode'},
-    {
-      '1': 'theme',
-      '3': 7,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.Theme',
-      '10': 'theme'
-    },
+    {'1': 'theme', '3': 7, '4': 1, '5': 14, '6': '.meshtastic.Theme', '10': 'theme'},
     {'1': 'alert_enabled', '3': 8, '4': 1, '5': 8, '10': 'alertEnabled'},
     {'1': 'banner_enabled', '3': 9, '4': 1, '5': 8, '10': 'bannerEnabled'},
     {'1': 'ring_tone_id', '3': 10, '4': 1, '5': 13, '10': 'ringToneId'},
-    {
-      '1': 'language',
-      '3': 11,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.Language',
-      '10': 'language'
-    },
-    {
-      '1': 'node_filter',
-      '3': 12,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.NodeFilter',
-      '10': 'nodeFilter'
-    },
-    {
-      '1': 'node_highlight',
-      '3': 13,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.NodeHighlight',
-      '10': 'nodeHighlight'
-    },
-    {
-      '1': 'calibration_data',
-      '3': 14,
-      '4': 1,
-      '5': 12,
-      '10': 'calibrationData'
-    },
-    {
-      '1': 'map_data',
-      '3': 15,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Map',
-      '10': 'mapData'
-    },
-    {
-      '1': 'compass_mode',
-      '3': 16,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.CompassMode',
-      '10': 'compassMode'
-    },
+    {'1': 'language', '3': 11, '4': 1, '5': 14, '6': '.meshtastic.Language', '10': 'language'},
+    {'1': 'node_filter', '3': 12, '4': 1, '5': 11, '6': '.meshtastic.NodeFilter', '10': 'nodeFilter'},
+    {'1': 'node_highlight', '3': 13, '4': 1, '5': 11, '6': '.meshtastic.NodeHighlight', '10': 'nodeHighlight'},
+    {'1': 'calibration_data', '3': 14, '4': 1, '5': 12, '10': 'calibrationData'},
+    {'1': 'map_data', '3': 15, '4': 1, '5': 11, '6': '.meshtastic.Map', '10': 'mapData'},
+    {'1': 'compass_mode', '3': 16, '4': 1, '5': 14, '6': '.meshtastic.CompassMode', '10': 'compassMode'},
     {'1': 'screen_rgb_color', '3': 17, '4': 1, '5': 13, '10': 'screenRgbColor'},
-    {
-      '1': 'is_clockface_analog',
-      '3': 18,
-      '4': 1,
-      '5': 8,
-      '10': 'isClockfaceAnalog'
-    },
+    {'1': 'is_clockface_analog', '3': 18, '4': 1, '5': 8, '10': 'isClockfaceAnalog'},
+    {'1': 'gps_format', '3': 19, '4': 1, '5': 14, '6': '.meshtastic.DeviceUIConfig.GpsCoordinateFormat', '10': 'gpsFormat'},
+  ],
+  '4': [DeviceUIConfig_GpsCoordinateFormat$json],
+};
+
+@$core.Deprecated('Use deviceUIConfigDescriptor instead')
+const DeviceUIConfig_GpsCoordinateFormat$json = {
+  '1': 'GpsCoordinateFormat',
+  '2': [
+    {'1': 'DEC', '2': 0},
+    {'1': 'DMS', '2': 1},
+    {'1': 'UTM', '2': 2},
+    {'1': 'MGRS', '2': 3},
+    {'1': 'OLC', '2': 4},
+    {'1': 'OSGR', '2': 5},
+    {'1': 'MLS', '2': 6},
   ],
 };
 
@@ -180,7 +137,10 @@ final $typed_data.Uint8List deviceUIConfigDescriptor = $convert.base64Decode(
     '5tZXNodGFzdGljLk1hcFIHbWFwRGF0YRI6Cgxjb21wYXNzX21vZGUYECABKA4yFy5tZXNodGFz'
     'dGljLkNvbXBhc3NNb2RlUgtjb21wYXNzTW9kZRIoChBzY3JlZW5fcmdiX2NvbG9yGBEgASgNUg'
     '5zY3JlZW5SZ2JDb2xvchIuChNpc19jbG9ja2ZhY2VfYW5hbG9nGBIgASgIUhFpc0Nsb2NrZmFj'
-    'ZUFuYWxvZw==');
+    'ZUFuYWxvZxJNCgpncHNfZm9ybWF0GBMgASgOMi4ubWVzaHRhc3RpYy5EZXZpY2VVSUNvbmZpZy'
+    '5HcHNDb29yZGluYXRlRm9ybWF0UglncHNGb3JtYXQiVgoTR3BzQ29vcmRpbmF0ZUZvcm1hdBIH'
+    'CgNERUMQABIHCgNETVMQARIHCgNVVE0QAhIICgRNR1JTEAMSBwoDT0xDEAQSCAoET1NHUhAFEg'
+    'cKA01MUxAG');
 
 @$core.Deprecated('Use nodeFilterDescriptor instead')
 const NodeFilter$json = {
@@ -242,14 +202,7 @@ final $typed_data.Uint8List geoPointDescriptor = $convert.base64Decode(
 const Map_$json = {
   '1': 'Map',
   '2': [
-    {
-      '1': 'home',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.GeoPoint',
-      '10': 'home'
-    },
+    {'1': 'home', '3': 1, '4': 1, '5': 11, '6': '.meshtastic.GeoPoint', '10': 'home'},
     {'1': 'style', '3': 2, '4': 1, '5': 9, '10': 'style'},
     {'1': 'follow_gps', '3': 3, '4': 1, '5': 8, '10': 'followGps'},
   ],
@@ -259,3 +212,4 @@ const Map_$json = {
 final $typed_data.Uint8List map_Descriptor = $convert.base64Decode(
     'CgNNYXASKAoEaG9tZRgBIAEoCzIULm1lc2h0YXN0aWMuR2VvUG9pbnRSBGhvbWUSFAoFc3R5bG'
     'UYAiABKAlSBXN0eWxlEh0KCmZvbGxvd19ncHMYAyABKAhSCWZvbGxvd0dwcw==');
+

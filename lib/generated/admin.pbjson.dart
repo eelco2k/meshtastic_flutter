@@ -1,479 +1,107 @@
-// This is a generated file - do not edit.
 //
-// Generated from meshtastic/admin.proto.
-
-// @dart = 3.3
+//  Generated code. Do not modify.
+//  source: meshtastic/admin.proto
+//
+// @dart = 2.12
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: curly_braces_in_flow_control_structures
-// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names, unused_import
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
+
+@$core.Deprecated('Use oTAModeDescriptor instead')
+const OTAMode$json = {
+  '1': 'OTAMode',
+  '2': [
+    {'1': 'NO_REBOOT_OTA', '2': 0},
+    {'1': 'OTA_BLE', '2': 1},
+    {'1': 'OTA_WIFI', '2': 2},
+  ],
+};
+
+/// Descriptor for `OTAMode`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List oTAModeDescriptor = $convert.base64Decode(
+    'CgdPVEFNb2RlEhEKDU5PX1JFQk9PVF9PVEEQABILCgdPVEFfQkxFEAESDAoIT1RBX1dJRkkQAg'
+    '==');
 
 @$core.Deprecated('Use adminMessageDescriptor instead')
 const AdminMessage$json = {
   '1': 'AdminMessage',
   '2': [
     {'1': 'session_passkey', '3': 101, '4': 1, '5': 12, '10': 'sessionPasskey'},
-    {
-      '1': 'get_channel_request',
-      '3': 1,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'getChannelRequest'
-    },
-    {
-      '1': 'get_channel_response',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Channel',
-      '9': 0,
-      '10': 'getChannelResponse'
-    },
-    {
-      '1': 'get_owner_request',
-      '3': 3,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getOwnerRequest'
-    },
-    {
-      '1': 'get_owner_response',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.User',
-      '9': 0,
-      '10': 'getOwnerResponse'
-    },
-    {
-      '1': 'get_config_request',
-      '3': 5,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.AdminMessage.ConfigType',
-      '9': 0,
-      '10': 'getConfigRequest'
-    },
-    {
-      '1': 'get_config_response',
-      '3': 6,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Config',
-      '9': 0,
-      '10': 'getConfigResponse'
-    },
-    {
-      '1': 'get_module_config_request',
-      '3': 7,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.AdminMessage.ModuleConfigType',
-      '9': 0,
-      '10': 'getModuleConfigRequest'
-    },
-    {
-      '1': 'get_module_config_response',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.ModuleConfig',
-      '9': 0,
-      '10': 'getModuleConfigResponse'
-    },
-    {
-      '1': 'get_canned_message_module_messages_request',
-      '3': 10,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getCannedMessageModuleMessagesRequest'
-    },
-    {
-      '1': 'get_canned_message_module_messages_response',
-      '3': 11,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'getCannedMessageModuleMessagesResponse'
-    },
-    {
-      '1': 'get_device_metadata_request',
-      '3': 12,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getDeviceMetadataRequest'
-    },
-    {
-      '1': 'get_device_metadata_response',
-      '3': 13,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.DeviceMetadata',
-      '9': 0,
-      '10': 'getDeviceMetadataResponse'
-    },
-    {
-      '1': 'get_ringtone_request',
-      '3': 14,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getRingtoneRequest'
-    },
-    {
-      '1': 'get_ringtone_response',
-      '3': 15,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'getRingtoneResponse'
-    },
-    {
-      '1': 'get_device_connection_status_request',
-      '3': 16,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getDeviceConnectionStatusRequest'
-    },
-    {
-      '1': 'get_device_connection_status_response',
-      '3': 17,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.DeviceConnectionStatus',
-      '9': 0,
-      '10': 'getDeviceConnectionStatusResponse'
-    },
-    {
-      '1': 'set_ham_mode',
-      '3': 18,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.HamParameters',
-      '9': 0,
-      '10': 'setHamMode'
-    },
-    {
-      '1': 'get_node_remote_hardware_pins_request',
-      '3': 19,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getNodeRemoteHardwarePinsRequest'
-    },
-    {
-      '1': 'get_node_remote_hardware_pins_response',
-      '3': 20,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.NodeRemoteHardwarePinsResponse',
-      '9': 0,
-      '10': 'getNodeRemoteHardwarePinsResponse'
-    },
-    {
-      '1': 'enter_dfu_mode_request',
-      '3': 21,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'enterDfuModeRequest'
-    },
-    {
-      '1': 'delete_file_request',
-      '3': 22,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'deleteFileRequest'
-    },
+    {'1': 'get_channel_request', '3': 1, '4': 1, '5': 13, '9': 0, '10': 'getChannelRequest'},
+    {'1': 'get_channel_response', '3': 2, '4': 1, '5': 11, '6': '.meshtastic.Channel', '9': 0, '10': 'getChannelResponse'},
+    {'1': 'get_owner_request', '3': 3, '4': 1, '5': 8, '9': 0, '10': 'getOwnerRequest'},
+    {'1': 'get_owner_response', '3': 4, '4': 1, '5': 11, '6': '.meshtastic.User', '9': 0, '10': 'getOwnerResponse'},
+    {'1': 'get_config_request', '3': 5, '4': 1, '5': 14, '6': '.meshtastic.AdminMessage.ConfigType', '9': 0, '10': 'getConfigRequest'},
+    {'1': 'get_config_response', '3': 6, '4': 1, '5': 11, '6': '.meshtastic.Config', '9': 0, '10': 'getConfigResponse'},
+    {'1': 'get_module_config_request', '3': 7, '4': 1, '5': 14, '6': '.meshtastic.AdminMessage.ModuleConfigType', '9': 0, '10': 'getModuleConfigRequest'},
+    {'1': 'get_module_config_response', '3': 8, '4': 1, '5': 11, '6': '.meshtastic.ModuleConfig', '9': 0, '10': 'getModuleConfigResponse'},
+    {'1': 'get_canned_message_module_messages_request', '3': 10, '4': 1, '5': 8, '9': 0, '10': 'getCannedMessageModuleMessagesRequest'},
+    {'1': 'get_canned_message_module_messages_response', '3': 11, '4': 1, '5': 9, '9': 0, '10': 'getCannedMessageModuleMessagesResponse'},
+    {'1': 'get_device_metadata_request', '3': 12, '4': 1, '5': 8, '9': 0, '10': 'getDeviceMetadataRequest'},
+    {'1': 'get_device_metadata_response', '3': 13, '4': 1, '5': 11, '6': '.meshtastic.DeviceMetadata', '9': 0, '10': 'getDeviceMetadataResponse'},
+    {'1': 'get_ringtone_request', '3': 14, '4': 1, '5': 8, '9': 0, '10': 'getRingtoneRequest'},
+    {'1': 'get_ringtone_response', '3': 15, '4': 1, '5': 9, '9': 0, '10': 'getRingtoneResponse'},
+    {'1': 'get_device_connection_status_request', '3': 16, '4': 1, '5': 8, '9': 0, '10': 'getDeviceConnectionStatusRequest'},
+    {'1': 'get_device_connection_status_response', '3': 17, '4': 1, '5': 11, '6': '.meshtastic.DeviceConnectionStatus', '9': 0, '10': 'getDeviceConnectionStatusResponse'},
+    {'1': 'set_ham_mode', '3': 18, '4': 1, '5': 11, '6': '.meshtastic.HamParameters', '9': 0, '10': 'setHamMode'},
+    {'1': 'get_node_remote_hardware_pins_request', '3': 19, '4': 1, '5': 8, '9': 0, '10': 'getNodeRemoteHardwarePinsRequest'},
+    {'1': 'get_node_remote_hardware_pins_response', '3': 20, '4': 1, '5': 11, '6': '.meshtastic.NodeRemoteHardwarePinsResponse', '9': 0, '10': 'getNodeRemoteHardwarePinsResponse'},
+    {'1': 'enter_dfu_mode_request', '3': 21, '4': 1, '5': 8, '9': 0, '10': 'enterDfuModeRequest'},
+    {'1': 'delete_file_request', '3': 22, '4': 1, '5': 9, '9': 0, '10': 'deleteFileRequest'},
     {'1': 'set_scale', '3': 23, '4': 1, '5': 13, '9': 0, '10': 'setScale'},
-    {
-      '1': 'backup_preferences',
-      '3': 24,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.AdminMessage.BackupLocation',
-      '9': 0,
-      '10': 'backupPreferences'
-    },
-    {
-      '1': 'restore_preferences',
-      '3': 25,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.AdminMessage.BackupLocation',
-      '9': 0,
-      '10': 'restorePreferences'
-    },
-    {
-      '1': 'remove_backup_preferences',
-      '3': 26,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.AdminMessage.BackupLocation',
-      '9': 0,
-      '10': 'removeBackupPreferences'
-    },
-    {
-      '1': 'send_input_event',
-      '3': 27,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.AdminMessage.InputEvent',
-      '9': 0,
-      '10': 'sendInputEvent'
-    },
-    {
-      '1': 'set_owner',
-      '3': 32,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.User',
-      '9': 0,
-      '10': 'setOwner'
-    },
-    {
-      '1': 'set_channel',
-      '3': 33,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Channel',
-      '9': 0,
-      '10': 'setChannel'
-    },
-    {
-      '1': 'set_config',
-      '3': 34,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Config',
-      '9': 0,
-      '10': 'setConfig'
-    },
-    {
-      '1': 'set_module_config',
-      '3': 35,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.ModuleConfig',
-      '9': 0,
-      '10': 'setModuleConfig'
-    },
-    {
-      '1': 'set_canned_message_module_messages',
-      '3': 36,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'setCannedMessageModuleMessages'
-    },
-    {
-      '1': 'set_ringtone_message',
-      '3': 37,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'setRingtoneMessage'
-    },
-    {
-      '1': 'remove_by_nodenum',
-      '3': 38,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'removeByNodenum'
-    },
-    {
-      '1': 'set_favorite_node',
-      '3': 39,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'setFavoriteNode'
-    },
-    {
-      '1': 'remove_favorite_node',
-      '3': 40,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'removeFavoriteNode'
-    },
-    {
-      '1': 'set_fixed_position',
-      '3': 41,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.Position',
-      '9': 0,
-      '10': 'setFixedPosition'
-    },
-    {
-      '1': 'remove_fixed_position',
-      '3': 42,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'removeFixedPosition'
-    },
-    {
-      '1': 'set_time_only',
-      '3': 43,
-      '4': 1,
-      '5': 7,
-      '9': 0,
-      '10': 'setTimeOnly'
-    },
-    {
-      '1': 'get_ui_config_request',
-      '3': 44,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'getUiConfigRequest'
-    },
-    {
-      '1': 'get_ui_config_response',
-      '3': 45,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.DeviceUIConfig',
-      '9': 0,
-      '10': 'getUiConfigResponse'
-    },
-    {
-      '1': 'store_ui_config',
-      '3': 46,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.DeviceUIConfig',
-      '9': 0,
-      '10': 'storeUiConfig'
-    },
-    {
-      '1': 'set_ignored_node',
-      '3': 47,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'setIgnoredNode'
-    },
-    {
-      '1': 'remove_ignored_node',
-      '3': 48,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'removeIgnoredNode'
-    },
-    {
-      '1': 'begin_edit_settings',
-      '3': 64,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'beginEditSettings'
-    },
-    {
-      '1': 'commit_edit_settings',
-      '3': 65,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'commitEditSettings'
-    },
-    {
-      '1': 'add_contact',
-      '3': 66,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.SharedContact',
-      '9': 0,
-      '10': 'addContact'
-    },
-    {
-      '1': 'key_verification',
-      '3': 67,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.KeyVerificationAdmin',
-      '9': 0,
-      '10': 'keyVerification'
-    },
-    {
-      '1': 'factory_reset_device',
-      '3': 94,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'factoryResetDevice'
-    },
+    {'1': 'backup_preferences', '3': 24, '4': 1, '5': 14, '6': '.meshtastic.AdminMessage.BackupLocation', '9': 0, '10': 'backupPreferences'},
+    {'1': 'restore_preferences', '3': 25, '4': 1, '5': 14, '6': '.meshtastic.AdminMessage.BackupLocation', '9': 0, '10': 'restorePreferences'},
+    {'1': 'remove_backup_preferences', '3': 26, '4': 1, '5': 14, '6': '.meshtastic.AdminMessage.BackupLocation', '9': 0, '10': 'removeBackupPreferences'},
+    {'1': 'send_input_event', '3': 27, '4': 1, '5': 11, '6': '.meshtastic.AdminMessage.InputEvent', '9': 0, '10': 'sendInputEvent'},
+    {'1': 'set_owner', '3': 32, '4': 1, '5': 11, '6': '.meshtastic.User', '9': 0, '10': 'setOwner'},
+    {'1': 'set_channel', '3': 33, '4': 1, '5': 11, '6': '.meshtastic.Channel', '9': 0, '10': 'setChannel'},
+    {'1': 'set_config', '3': 34, '4': 1, '5': 11, '6': '.meshtastic.Config', '9': 0, '10': 'setConfig'},
+    {'1': 'set_module_config', '3': 35, '4': 1, '5': 11, '6': '.meshtastic.ModuleConfig', '9': 0, '10': 'setModuleConfig'},
+    {'1': 'set_canned_message_module_messages', '3': 36, '4': 1, '5': 9, '9': 0, '10': 'setCannedMessageModuleMessages'},
+    {'1': 'set_ringtone_message', '3': 37, '4': 1, '5': 9, '9': 0, '10': 'setRingtoneMessage'},
+    {'1': 'remove_by_nodenum', '3': 38, '4': 1, '5': 13, '9': 0, '10': 'removeByNodenum'},
+    {'1': 'set_favorite_node', '3': 39, '4': 1, '5': 13, '9': 0, '10': 'setFavoriteNode'},
+    {'1': 'remove_favorite_node', '3': 40, '4': 1, '5': 13, '9': 0, '10': 'removeFavoriteNode'},
+    {'1': 'set_fixed_position', '3': 41, '4': 1, '5': 11, '6': '.meshtastic.Position', '9': 0, '10': 'setFixedPosition'},
+    {'1': 'remove_fixed_position', '3': 42, '4': 1, '5': 8, '9': 0, '10': 'removeFixedPosition'},
+    {'1': 'set_time_only', '3': 43, '4': 1, '5': 7, '9': 0, '10': 'setTimeOnly'},
+    {'1': 'get_ui_config_request', '3': 44, '4': 1, '5': 8, '9': 0, '10': 'getUiConfigRequest'},
+    {'1': 'get_ui_config_response', '3': 45, '4': 1, '5': 11, '6': '.meshtastic.DeviceUIConfig', '9': 0, '10': 'getUiConfigResponse'},
+    {'1': 'store_ui_config', '3': 46, '4': 1, '5': 11, '6': '.meshtastic.DeviceUIConfig', '9': 0, '10': 'storeUiConfig'},
+    {'1': 'set_ignored_node', '3': 47, '4': 1, '5': 13, '9': 0, '10': 'setIgnoredNode'},
+    {'1': 'remove_ignored_node', '3': 48, '4': 1, '5': 13, '9': 0, '10': 'removeIgnoredNode'},
+    {'1': 'toggle_muted_node', '3': 49, '4': 1, '5': 13, '9': 0, '10': 'toggleMutedNode'},
+    {'1': 'begin_edit_settings', '3': 64, '4': 1, '5': 8, '9': 0, '10': 'beginEditSettings'},
+    {'1': 'commit_edit_settings', '3': 65, '4': 1, '5': 8, '9': 0, '10': 'commitEditSettings'},
+    {'1': 'add_contact', '3': 66, '4': 1, '5': 11, '6': '.meshtastic.SharedContact', '9': 0, '10': 'addContact'},
+    {'1': 'key_verification', '3': 67, '4': 1, '5': 11, '6': '.meshtastic.KeyVerificationAdmin', '9': 0, '10': 'keyVerification'},
+    {'1': 'factory_reset_device', '3': 94, '4': 1, '5': 5, '9': 0, '10': 'factoryResetDevice'},
     {
       '1': 'reboot_ota_seconds',
       '3': 95,
       '4': 1,
       '5': 5,
+      '8': {'3': true},
       '9': 0,
-      '10': 'rebootOtaSeconds'
+      '10': 'rebootOtaSeconds',
     },
-    {
-      '1': 'exit_simulator',
-      '3': 96,
-      '4': 1,
-      '5': 8,
-      '9': 0,
-      '10': 'exitSimulator'
-    },
-    {
-      '1': 'reboot_seconds',
-      '3': 97,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'rebootSeconds'
-    },
-    {
-      '1': 'shutdown_seconds',
-      '3': 98,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'shutdownSeconds'
-    },
-    {
-      '1': 'factory_reset_config',
-      '3': 99,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'factoryResetConfig'
-    },
-    {
-      '1': 'nodedb_reset',
-      '3': 100,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'nodedbReset'
-    },
+    {'1': 'exit_simulator', '3': 96, '4': 1, '5': 8, '9': 0, '10': 'exitSimulator'},
+    {'1': 'reboot_seconds', '3': 97, '4': 1, '5': 5, '9': 0, '10': 'rebootSeconds'},
+    {'1': 'shutdown_seconds', '3': 98, '4': 1, '5': 5, '9': 0, '10': 'shutdownSeconds'},
+    {'1': 'factory_reset_config', '3': 99, '4': 1, '5': 5, '9': 0, '10': 'factoryResetConfig'},
+    {'1': 'nodedb_reset', '3': 100, '4': 1, '5': 8, '9': 0, '10': 'nodedbReset'},
+    {'1': 'ota_request', '3': 102, '4': 1, '5': 11, '6': '.meshtastic.AdminMessage.OTAEvent', '9': 0, '10': 'otaRequest'},
+    {'1': 'sensor_config', '3': 103, '4': 1, '5': 11, '6': '.meshtastic.SensorConfig', '9': 0, '10': 'sensorConfig'},
+    {'1': 'lockdown_auth', '3': 104, '4': 1, '5': 11, '6': '.meshtastic.LockdownAuth', '9': 0, '10': 'lockdownAuth'},
   ],
-  '3': [AdminMessage_InputEvent$json],
-  '4': [
-    AdminMessage_ConfigType$json,
-    AdminMessage_ModuleConfigType$json,
-    AdminMessage_BackupLocation$json
-  ],
+  '3': [AdminMessage_InputEvent$json, AdminMessage_OTAEvent$json],
+  '4': [AdminMessage_ConfigType$json, AdminMessage_ModuleConfigType$json, AdminMessage_BackupLocation$json],
   '8': [
     {'1': 'payload_variant'},
   ],
@@ -487,6 +115,15 @@ const AdminMessage_InputEvent$json = {
     {'1': 'kb_char', '3': 2, '4': 1, '5': 13, '10': 'kbChar'},
     {'1': 'touch_x', '3': 3, '4': 1, '5': 13, '10': 'touchX'},
     {'1': 'touch_y', '3': 4, '4': 1, '5': 13, '10': 'touchY'},
+  ],
+};
+
+@$core.Deprecated('Use adminMessageDescriptor instead')
+const AdminMessage_OTAEvent$json = {
+  '1': 'OTAEvent',
+  '2': [
+    {'1': 'reboot_ota_mode', '3': 1, '4': 1, '5': 14, '6': '.meshtastic.OTAMode', '10': 'rebootOtaMode'},
+    {'1': 'ota_hash', '3': 2, '4': 1, '5': 12, '10': 'otaHash'},
   ],
 };
 
@@ -524,6 +161,9 @@ const AdminMessage_ModuleConfigType$json = {
     {'1': 'AMBIENTLIGHTING_CONFIG', '2': 10},
     {'1': 'DETECTIONSENSOR_CONFIG', '2': 11},
     {'1': 'PAXCOUNTER_CONFIG', '2': 12},
+    {'1': 'STATUSMESSAGE_CONFIG', '2': 13},
+    {'1': 'TRAFFICMANAGEMENT_CONFIG', '2': 14},
+    {'1': 'TAK_CONFIG', '2': 15},
   ],
 };
 
@@ -592,30 +232,55 @@ final $typed_data.Uint8List adminMessageDescriptor = $convert.base64Decode(
     'FzdGljLkRldmljZVVJQ29uZmlnSABSE2dldFVpQ29uZmlnUmVzcG9uc2USRAoPc3RvcmVfdWlf'
     'Y29uZmlnGC4gASgLMhoubWVzaHRhc3RpYy5EZXZpY2VVSUNvbmZpZ0gAUg1zdG9yZVVpQ29uZm'
     'lnEioKEHNldF9pZ25vcmVkX25vZGUYLyABKA1IAFIOc2V0SWdub3JlZE5vZGUSMAoTcmVtb3Zl'
-    'X2lnbm9yZWRfbm9kZRgwIAEoDUgAUhFyZW1vdmVJZ25vcmVkTm9kZRIwChNiZWdpbl9lZGl0X3'
-    'NldHRpbmdzGEAgASgISABSEWJlZ2luRWRpdFNldHRpbmdzEjIKFGNvbW1pdF9lZGl0X3NldHRp'
-    'bmdzGEEgASgISABSEmNvbW1pdEVkaXRTZXR0aW5ncxI8CgthZGRfY29udGFjdBhCIAEoCzIZLm'
-    '1lc2h0YXN0aWMuU2hhcmVkQ29udGFjdEgAUgphZGRDb250YWN0Ek0KEGtleV92ZXJpZmljYXRp'
-    'b24YQyABKAsyIC5tZXNodGFzdGljLktleVZlcmlmaWNhdGlvbkFkbWluSABSD2tleVZlcmlmaW'
-    'NhdGlvbhIyChRmYWN0b3J5X3Jlc2V0X2RldmljZRheIAEoBUgAUhJmYWN0b3J5UmVzZXREZXZp'
-    'Y2USLgoScmVib290X290YV9zZWNvbmRzGF8gASgFSABSEHJlYm9vdE90YVNlY29uZHMSJwoOZX'
-    'hpdF9zaW11bGF0b3IYYCABKAhIAFINZXhpdFNpbXVsYXRvchInCg5yZWJvb3Rfc2Vjb25kcxhh'
-    'IAEoBUgAUg1yZWJvb3RTZWNvbmRzEisKEHNodXRkb3duX3NlY29uZHMYYiABKAVIAFIPc2h1dG'
-    'Rvd25TZWNvbmRzEjIKFGZhY3RvcnlfcmVzZXRfY29uZmlnGGMgASgFSABSEmZhY3RvcnlSZXNl'
-    'dENvbmZpZxIjCgxub2RlZGJfcmVzZXQYZCABKAVIAFILbm9kZWRiUmVzZXQadgoKSW5wdXRFdm'
-    'VudBIdCgpldmVudF9jb2RlGAEgASgNUglldmVudENvZGUSFwoHa2JfY2hhchgCIAEoDVIGa2JD'
-    'aGFyEhcKB3RvdWNoX3gYAyABKA1SBnRvdWNoWBIXCgd0b3VjaF95GAQgASgNUgZ0b3VjaFki1g'
-    'EKCkNvbmZpZ1R5cGUSEQoNREVWSUNFX0NPTkZJRxAAEhMKD1BPU0lUSU9OX0NPTkZJRxABEhAK'
-    'DFBPV0VSX0NPTkZJRxACEhIKDk5FVFdPUktfQ09ORklHEAMSEgoORElTUExBWV9DT05GSUcQBB'
-    'IPCgtMT1JBX0NPTkZJRxAFEhQKEEJMVUVUT09USF9DT05GSUcQBhITCg9TRUNVUklUWV9DT05G'
-    'SUcQBxIVChFTRVNTSU9OS0VZX0NPTkZJRxAIEhMKD0RFVklDRVVJX0NPTkZJRxAJIrsCChBNb2'
-    'R1bGVDb25maWdUeXBlEg8KC01RVFRfQ09ORklHEAASEQoNU0VSSUFMX0NPTkZJRxABEhMKD0VY'
-    'VE5PVElGX0NPTkZJRxACEhcKE1NUT1JFRk9SV0FSRF9DT05GSUcQAxIUChBSQU5HRVRFU1RfQ0'
-    '9ORklHEAQSFAoQVEVMRU1FVFJZX0NPTkZJRxAFEhQKEENBTk5FRE1TR19DT05GSUcQBhIQCgxB'
-    'VURJT19DT05GSUcQBxIZChVSRU1PVEVIQVJEV0FSRV9DT05GSUcQCBIXChNORUlHSEJPUklORk'
-    '9fQ09ORklHEAkSGgoWQU1CSUVOVExJR0hUSU5HX0NPTkZJRxAKEhoKFkRFVEVDVElPTlNFTlNP'
-    'Ul9DT05GSUcQCxIVChFQQVhDT1VOVEVSX0NPTkZJRxAMIiMKDkJhY2t1cExvY2F0aW9uEgkKBU'
-    'ZMQVNIEAASBgoCU0QQAUIRCg9wYXlsb2FkX3ZhcmlhbnQ=');
+    'X2lnbm9yZWRfbm9kZRgwIAEoDUgAUhFyZW1vdmVJZ25vcmVkTm9kZRIsChF0b2dnbGVfbXV0ZW'
+    'Rfbm9kZRgxIAEoDUgAUg90b2dnbGVNdXRlZE5vZGUSMAoTYmVnaW5fZWRpdF9zZXR0aW5ncxhA'
+    'IAEoCEgAUhFiZWdpbkVkaXRTZXR0aW5ncxIyChRjb21taXRfZWRpdF9zZXR0aW5ncxhBIAEoCE'
+    'gAUhJjb21taXRFZGl0U2V0dGluZ3MSPAoLYWRkX2NvbnRhY3QYQiABKAsyGS5tZXNodGFzdGlj'
+    'LlNoYXJlZENvbnRhY3RIAFIKYWRkQ29udGFjdBJNChBrZXlfdmVyaWZpY2F0aW9uGEMgASgLMi'
+    'AubWVzaHRhc3RpYy5LZXlWZXJpZmljYXRpb25BZG1pbkgAUg9rZXlWZXJpZmljYXRpb24SMgoU'
+    'ZmFjdG9yeV9yZXNldF9kZXZpY2UYXiABKAVIAFISZmFjdG9yeVJlc2V0RGV2aWNlEjIKEnJlYm'
+    '9vdF9vdGFfc2Vjb25kcxhfIAEoBUICGAFIAFIQcmVib290T3RhU2Vjb25kcxInCg5leGl0X3Np'
+    'bXVsYXRvchhgIAEoCEgAUg1leGl0U2ltdWxhdG9yEicKDnJlYm9vdF9zZWNvbmRzGGEgASgFSA'
+    'BSDXJlYm9vdFNlY29uZHMSKwoQc2h1dGRvd25fc2Vjb25kcxhiIAEoBUgAUg9zaHV0ZG93blNl'
+    'Y29uZHMSMgoUZmFjdG9yeV9yZXNldF9jb25maWcYYyABKAVIAFISZmFjdG9yeVJlc2V0Q29uZm'
+    'lnEiMKDG5vZGVkYl9yZXNldBhkIAEoCEgAUgtub2RlZGJSZXNldBJECgtvdGFfcmVxdWVzdBhm'
+    'IAEoCzIhLm1lc2h0YXN0aWMuQWRtaW5NZXNzYWdlLk9UQUV2ZW50SABSCm90YVJlcXVlc3QSPw'
+    'oNc2Vuc29yX2NvbmZpZxhnIAEoCzIYLm1lc2h0YXN0aWMuU2Vuc29yQ29uZmlnSABSDHNlbnNv'
+    'ckNvbmZpZxI/Cg1sb2NrZG93bl9hdXRoGGggASgLMhgubWVzaHRhc3RpYy5Mb2NrZG93bkF1dG'
+    'hIAFIMbG9ja2Rvd25BdXRoGnYKCklucHV0RXZlbnQSHQoKZXZlbnRfY29kZRgBIAEoDVIJZXZl'
+    'bnRDb2RlEhcKB2tiX2NoYXIYAiABKA1SBmtiQ2hhchIXCgd0b3VjaF94GAMgASgNUgZ0b3VjaF'
+    'gSFwoHdG91Y2hfeRgEIAEoDVIGdG91Y2hZGmIKCE9UQUV2ZW50EjsKD3JlYm9vdF9vdGFfbW9k'
+    'ZRgBIAEoDjITLm1lc2h0YXN0aWMuT1RBTW9kZVINcmVib290T3RhTW9kZRIZCghvdGFfaGFzaB'
+    'gCIAEoDFIHb3RhSGFzaCLWAQoKQ29uZmlnVHlwZRIRCg1ERVZJQ0VfQ09ORklHEAASEwoPUE9T'
+    'SVRJT05fQ09ORklHEAESEAoMUE9XRVJfQ09ORklHEAISEgoOTkVUV09SS19DT05GSUcQAxISCg'
+    '5ESVNQTEFZX0NPTkZJRxAEEg8KC0xPUkFfQ09ORklHEAUSFAoQQkxVRVRPT1RIX0NPTkZJRxAG'
+    'EhMKD1NFQ1VSSVRZX0NPTkZJRxAHEhUKEVNFU1NJT05LRVlfQ09ORklHEAgSEwoPREVWSUNFVU'
+    'lfQ09ORklHEAkigwMKEE1vZHVsZUNvbmZpZ1R5cGUSDwoLTVFUVF9DT05GSUcQABIRCg1TRVJJ'
+    'QUxfQ09ORklHEAESEwoPRVhUTk9USUZfQ09ORklHEAISFwoTU1RPUkVGT1JXQVJEX0NPTkZJRx'
+    'ADEhQKEFJBTkdFVEVTVF9DT05GSUcQBBIUChBURUxFTUVUUllfQ09ORklHEAUSFAoQQ0FOTkVE'
+    'TVNHX0NPTkZJRxAGEhAKDEFVRElPX0NPTkZJRxAHEhkKFVJFTU9URUhBUkRXQVJFX0NPTkZJRx'
+    'AIEhcKE05FSUdIQk9SSU5GT19DT05GSUcQCRIaChZBTUJJRU5UTElHSFRJTkdfQ09ORklHEAoS'
+    'GgoWREVURUNUSU9OU0VOU09SX0NPTkZJRxALEhUKEVBBWENPVU5URVJfQ09ORklHEAwSGAoUU1'
+    'RBVFVTTUVTU0FHRV9DT05GSUcQDRIcChhUUkFGRklDTUFOQUdFTUVOVF9DT05GSUcQDhIOCgpU'
+    'QUtfQ09ORklHEA8iIwoOQmFja3VwTG9jYXRpb24SCQoFRkxBU0gQABIGCgJTRBABQhEKD3BheW'
+    'xvYWRfdmFyaWFudA==');
+
+@$core.Deprecated('Use lockdownAuthDescriptor instead')
+const LockdownAuth$json = {
+  '1': 'LockdownAuth',
+  '2': [
+    {'1': 'passphrase', '3': 1, '4': 1, '5': 12, '10': 'passphrase'},
+    {'1': 'boots_remaining', '3': 2, '4': 1, '5': 13, '10': 'bootsRemaining'},
+    {'1': 'valid_until_epoch', '3': 3, '4': 1, '5': 13, '10': 'validUntilEpoch'},
+    {'1': 'lock_now', '3': 4, '4': 1, '5': 8, '10': 'lockNow'},
+  ],
+};
+
+/// Descriptor for `LockdownAuth`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lockdownAuthDescriptor = $convert.base64Decode(
+    'CgxMb2NrZG93bkF1dGgSHgoKcGFzc3BocmFzZRgBIAEoDFIKcGFzc3BocmFzZRInCg9ib290c1'
+    '9yZW1haW5pbmcYAiABKA1SDmJvb3RzUmVtYWluaW5nEioKEXZhbGlkX3VudGlsX2Vwb2NoGAMg'
+    'ASgNUg92YWxpZFVudGlsRXBvY2gSGQoIbG9ja19ub3cYBCABKAhSB2xvY2tOb3c=');
 
 @$core.Deprecated('Use hamParametersDescriptor instead')
 const HamParameters$json = {
@@ -638,38 +303,24 @@ final $typed_data.Uint8List hamParametersDescriptor = $convert.base64Decode(
 const NodeRemoteHardwarePinsResponse$json = {
   '1': 'NodeRemoteHardwarePinsResponse',
   '2': [
-    {
-      '1': 'node_remote_hardware_pins',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.meshtastic.NodeRemoteHardwarePin',
-      '10': 'nodeRemoteHardwarePins'
-    },
+    {'1': 'node_remote_hardware_pins', '3': 1, '4': 3, '5': 11, '6': '.meshtastic.NodeRemoteHardwarePin', '10': 'nodeRemoteHardwarePins'},
   ],
 };
 
 /// Descriptor for `NodeRemoteHardwarePinsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodeRemoteHardwarePinsResponseDescriptor =
-    $convert.base64Decode(
-        'Ch5Ob2RlUmVtb3RlSGFyZHdhcmVQaW5zUmVzcG9uc2USXAoZbm9kZV9yZW1vdGVfaGFyZHdhcm'
-        'VfcGlucxgBIAMoCzIhLm1lc2h0YXN0aWMuTm9kZVJlbW90ZUhhcmR3YXJlUGluUhZub2RlUmVt'
-        'b3RlSGFyZHdhcmVQaW5z');
+final $typed_data.Uint8List nodeRemoteHardwarePinsResponseDescriptor = $convert.base64Decode(
+    'Ch5Ob2RlUmVtb3RlSGFyZHdhcmVQaW5zUmVzcG9uc2USXAoZbm9kZV9yZW1vdGVfaGFyZHdhcm'
+    'VfcGlucxgBIAMoCzIhLm1lc2h0YXN0aWMuTm9kZVJlbW90ZUhhcmR3YXJlUGluUhZub2RlUmVt'
+    'b3RlSGFyZHdhcmVQaW5z');
 
 @$core.Deprecated('Use sharedContactDescriptor instead')
 const SharedContact$json = {
   '1': 'SharedContact',
   '2': [
     {'1': 'node_num', '3': 1, '4': 1, '5': 13, '10': 'nodeNum'},
-    {
-      '1': 'user',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.meshtastic.User',
-      '10': 'user'
-    },
+    {'1': 'user', '3': 2, '4': 1, '5': 11, '6': '.meshtastic.User', '10': 'user'},
     {'1': 'should_ignore', '3': 3, '4': 1, '5': 8, '10': 'shouldIgnore'},
+    {'1': 'manually_verified', '3': 4, '4': 1, '5': 8, '10': 'manuallyVerified'},
   ],
 };
 
@@ -677,31 +328,16 @@ const SharedContact$json = {
 final $typed_data.Uint8List sharedContactDescriptor = $convert.base64Decode(
     'Cg1TaGFyZWRDb250YWN0EhkKCG5vZGVfbnVtGAEgASgNUgdub2RlTnVtEiQKBHVzZXIYAiABKA'
     'syEC5tZXNodGFzdGljLlVzZXJSBHVzZXISIwoNc2hvdWxkX2lnbm9yZRgDIAEoCFIMc2hvdWxk'
-    'SWdub3Jl');
+    'SWdub3JlEisKEW1hbnVhbGx5X3ZlcmlmaWVkGAQgASgIUhBtYW51YWxseVZlcmlmaWVk');
 
 @$core.Deprecated('Use keyVerificationAdminDescriptor instead')
 const KeyVerificationAdmin$json = {
   '1': 'KeyVerificationAdmin',
   '2': [
-    {
-      '1': 'message_type',
-      '3': 1,
-      '4': 1,
-      '5': 14,
-      '6': '.meshtastic.KeyVerificationAdmin.MessageType',
-      '10': 'messageType'
-    },
+    {'1': 'message_type', '3': 1, '4': 1, '5': 14, '6': '.meshtastic.KeyVerificationAdmin.MessageType', '10': 'messageType'},
     {'1': 'remote_nodenum', '3': 2, '4': 1, '5': 13, '10': 'remoteNodenum'},
     {'1': 'nonce', '3': 3, '4': 1, '5': 4, '10': 'nonce'},
-    {
-      '1': 'security_number',
-      '3': 4,
-      '4': 1,
-      '5': 13,
-      '9': 0,
-      '10': 'securityNumber',
-      '17': true
-    },
+    {'1': 'security_number', '3': 4, '4': 1, '5': 13, '9': 0, '10': 'securityNumber', '17': true},
   ],
   '4': [KeyVerificationAdmin_MessageType$json],
   '8': [
@@ -729,3 +365,125 @@ final $typed_data.Uint8List keyVerificationAdminDescriptor = $convert.base64Deco
     'eXBlEhkKFUlOSVRJQVRFX1ZFUklGSUNBVElPThAAEhsKF1BST1ZJREVfU0VDVVJJVFlfTlVNQk'
     'VSEAESDQoJRE9fVkVSSUZZEAISEQoNRE9fTk9UX1ZFUklGWRADQhIKEF9zZWN1cml0eV9udW1i'
     'ZXI=');
+
+@$core.Deprecated('Use sensorConfigDescriptor instead')
+const SensorConfig$json = {
+  '1': 'SensorConfig',
+  '2': [
+    {'1': 'scd4x_config', '3': 1, '4': 1, '5': 11, '6': '.meshtastic.SCD4X_config', '10': 'scd4xConfig'},
+    {'1': 'sen5x_config', '3': 2, '4': 1, '5': 11, '6': '.meshtastic.SEN5X_config', '10': 'sen5xConfig'},
+    {'1': 'scd30_config', '3': 3, '4': 1, '5': 11, '6': '.meshtastic.SCD30_config', '10': 'scd30Config'},
+    {'1': 'shtxx_config', '3': 4, '4': 1, '5': 11, '6': '.meshtastic.SHTXX_config', '10': 'shtxxConfig'},
+  ],
+};
+
+/// Descriptor for `SensorConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sensorConfigDescriptor = $convert.base64Decode(
+    'CgxTZW5zb3JDb25maWcSOwoMc2NkNHhfY29uZmlnGAEgASgLMhgubWVzaHRhc3RpYy5TQ0Q0WF'
+    '9jb25maWdSC3NjZDR4Q29uZmlnEjsKDHNlbjV4X2NvbmZpZxgCIAEoCzIYLm1lc2h0YXN0aWMu'
+    'U0VONVhfY29uZmlnUgtzZW41eENvbmZpZxI7CgxzY2QzMF9jb25maWcYAyABKAsyGC5tZXNodG'
+    'FzdGljLlNDRDMwX2NvbmZpZ1ILc2NkMzBDb25maWcSOwoMc2h0eHhfY29uZmlnGAQgASgLMhgu'
+    'bWVzaHRhc3RpYy5TSFRYWF9jb25maWdSC3NodHh4Q29uZmln');
+
+@$core.Deprecated('Use sCD4X_configDescriptor instead')
+const SCD4X_config$json = {
+  '1': 'SCD4X_config',
+  '2': [
+    {'1': 'set_asc', '3': 1, '4': 1, '5': 8, '9': 0, '10': 'setAsc', '17': true},
+    {'1': 'set_target_co2_conc', '3': 2, '4': 1, '5': 13, '9': 1, '10': 'setTargetCo2Conc', '17': true},
+    {'1': 'set_temperature', '3': 3, '4': 1, '5': 2, '9': 2, '10': 'setTemperature', '17': true},
+    {'1': 'set_altitude', '3': 4, '4': 1, '5': 13, '9': 3, '10': 'setAltitude', '17': true},
+    {'1': 'set_ambient_pressure', '3': 5, '4': 1, '5': 13, '9': 4, '10': 'setAmbientPressure', '17': true},
+    {'1': 'factory_reset', '3': 6, '4': 1, '5': 8, '9': 5, '10': 'factoryReset', '17': true},
+    {'1': 'set_power_mode', '3': 7, '4': 1, '5': 8, '9': 6, '10': 'setPowerMode', '17': true},
+  ],
+  '8': [
+    {'1': '_set_asc'},
+    {'1': '_set_target_co2_conc'},
+    {'1': '_set_temperature'},
+    {'1': '_set_altitude'},
+    {'1': '_set_ambient_pressure'},
+    {'1': '_factory_reset'},
+    {'1': '_set_power_mode'},
+  ],
+};
+
+/// Descriptor for `SCD4X_config`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sCD4X_configDescriptor = $convert.base64Decode(
+    'CgxTQ0Q0WF9jb25maWcSHAoHc2V0X2FzYxgBIAEoCEgAUgZzZXRBc2OIAQESMgoTc2V0X3Rhcm'
+    'dldF9jbzJfY29uYxgCIAEoDUgBUhBzZXRUYXJnZXRDbzJDb25jiAEBEiwKD3NldF90ZW1wZXJh'
+    'dHVyZRgDIAEoAkgCUg5zZXRUZW1wZXJhdHVyZYgBARImCgxzZXRfYWx0aXR1ZGUYBCABKA1IA1'
+    'ILc2V0QWx0aXR1ZGWIAQESNQoUc2V0X2FtYmllbnRfcHJlc3N1cmUYBSABKA1IBFISc2V0QW1i'
+    'aWVudFByZXNzdXJliAEBEigKDWZhY3RvcnlfcmVzZXQYBiABKAhIBVIMZmFjdG9yeVJlc2V0iA'
+    'EBEikKDnNldF9wb3dlcl9tb2RlGAcgASgISAZSDHNldFBvd2VyTW9kZYgBAUIKCghfc2V0X2Fz'
+    'Y0IWChRfc2V0X3RhcmdldF9jbzJfY29uY0ISChBfc2V0X3RlbXBlcmF0dXJlQg8KDV9zZXRfYW'
+    'x0aXR1ZGVCFwoVX3NldF9hbWJpZW50X3ByZXNzdXJlQhAKDl9mYWN0b3J5X3Jlc2V0QhEKD19z'
+    'ZXRfcG93ZXJfbW9kZQ==');
+
+@$core.Deprecated('Use sEN5X_configDescriptor instead')
+const SEN5X_config$json = {
+  '1': 'SEN5X_config',
+  '2': [
+    {'1': 'set_temperature', '3': 1, '4': 1, '5': 2, '9': 0, '10': 'setTemperature', '17': true},
+    {'1': 'set_one_shot_mode', '3': 2, '4': 1, '5': 8, '9': 1, '10': 'setOneShotMode', '17': true},
+  ],
+  '8': [
+    {'1': '_set_temperature'},
+    {'1': '_set_one_shot_mode'},
+  ],
+};
+
+/// Descriptor for `SEN5X_config`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sEN5X_configDescriptor = $convert.base64Decode(
+    'CgxTRU41WF9jb25maWcSLAoPc2V0X3RlbXBlcmF0dXJlGAEgASgCSABSDnNldFRlbXBlcmF0dX'
+    'JliAEBEi4KEXNldF9vbmVfc2hvdF9tb2RlGAIgASgISAFSDnNldE9uZVNob3RNb2RliAEBQhIK'
+    'EF9zZXRfdGVtcGVyYXR1cmVCFAoSX3NldF9vbmVfc2hvdF9tb2Rl');
+
+@$core.Deprecated('Use sCD30_configDescriptor instead')
+const SCD30_config$json = {
+  '1': 'SCD30_config',
+  '2': [
+    {'1': 'set_asc', '3': 1, '4': 1, '5': 8, '9': 0, '10': 'setAsc', '17': true},
+    {'1': 'set_target_co2_conc', '3': 2, '4': 1, '5': 13, '9': 1, '10': 'setTargetCo2Conc', '17': true},
+    {'1': 'set_temperature', '3': 3, '4': 1, '5': 2, '9': 2, '10': 'setTemperature', '17': true},
+    {'1': 'set_altitude', '3': 4, '4': 1, '5': 13, '9': 3, '10': 'setAltitude', '17': true},
+    {'1': 'set_measurement_interval', '3': 5, '4': 1, '5': 13, '9': 4, '10': 'setMeasurementInterval', '17': true},
+    {'1': 'soft_reset', '3': 6, '4': 1, '5': 8, '9': 5, '10': 'softReset', '17': true},
+  ],
+  '8': [
+    {'1': '_set_asc'},
+    {'1': '_set_target_co2_conc'},
+    {'1': '_set_temperature'},
+    {'1': '_set_altitude'},
+    {'1': '_set_measurement_interval'},
+    {'1': '_soft_reset'},
+  ],
+};
+
+/// Descriptor for `SCD30_config`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sCD30_configDescriptor = $convert.base64Decode(
+    'CgxTQ0QzMF9jb25maWcSHAoHc2V0X2FzYxgBIAEoCEgAUgZzZXRBc2OIAQESMgoTc2V0X3Rhcm'
+    'dldF9jbzJfY29uYxgCIAEoDUgBUhBzZXRUYXJnZXRDbzJDb25jiAEBEiwKD3NldF90ZW1wZXJh'
+    'dHVyZRgDIAEoAkgCUg5zZXRUZW1wZXJhdHVyZYgBARImCgxzZXRfYWx0aXR1ZGUYBCABKA1IA1'
+    'ILc2V0QWx0aXR1ZGWIAQESPQoYc2V0X21lYXN1cmVtZW50X2ludGVydmFsGAUgASgNSARSFnNl'
+    'dE1lYXN1cmVtZW50SW50ZXJ2YWyIAQESIgoKc29mdF9yZXNldBgGIAEoCEgFUglzb2Z0UmVzZX'
+    'SIAQFCCgoIX3NldF9hc2NCFgoUX3NldF90YXJnZXRfY28yX2NvbmNCEgoQX3NldF90ZW1wZXJh'
+    'dHVyZUIPCg1fc2V0X2FsdGl0dWRlQhsKGV9zZXRfbWVhc3VyZW1lbnRfaW50ZXJ2YWxCDQoLX3'
+    'NvZnRfcmVzZXQ=');
+
+@$core.Deprecated('Use sHTXX_configDescriptor instead')
+const SHTXX_config$json = {
+  '1': 'SHTXX_config',
+  '2': [
+    {'1': 'set_accuracy', '3': 1, '4': 1, '5': 13, '9': 0, '10': 'setAccuracy', '17': true},
+  ],
+  '8': [
+    {'1': '_set_accuracy'},
+  ],
+};
+
+/// Descriptor for `SHTXX_config`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sHTXX_configDescriptor = $convert.base64Decode(
+    'CgxTSFRYWF9jb25maWcSJgoMc2V0X2FjY3VyYWN5GAEgASgNSABSC3NldEFjY3VyYWN5iAEBQg'
+    '8KDV9zZXRfYWNjdXJhY3k=');
+
